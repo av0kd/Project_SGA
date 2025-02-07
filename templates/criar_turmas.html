@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Turmas</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Criar Nova Turma</h1>
+        <form action="/turmas_criadas" method="POST">
+            <label for="nome_turma">Nome da Turma:</label>
+            <input type="text" id="nome_turma" name="nome_turma" placeholder="Ex: Turma A" required>
+            <button type="submit" class="botao">Criar Turma</button>
+        </form>
+    </div>
+</body>
+</html>
