@@ -27,6 +27,30 @@ def alunos_adicionados():
     db.session.commit()
     return render_template('alunos_adicionados.html')
 
+@app.route('/pesquisar_alunos')
+def pesquisar_alunos():
+    return render_template('pesquisar_alunos.html')
+
+@app.route('/aluno_pesquisado', methods=['POST'])
+def aluno_pesquisado():
+    aluno_nome = request.form.get('nome_aluno')
+
+    if not aluno_nome:
+        return "Erro: nome do aluno é obrigatório", 400
+
+    # Consulta somente com o nome do aluno e turma
+    resultado = db.session.query(Aluno.nome, Turma.nome) \
+        .join(Turma, Aluno.turma_id == Turma.id) \
+        .filter(Aluno.nome == aluno_nome) \
+        .first()
+
+    if not resultado:
+        return f"Nenhum aluno encontrado com o nome '{aluno_nome}'."
+
+    nome_aluno, nome_turma = resultado
+
+    return render_template('aluno_pesquisado.html', nome_aluno=nome_aluno, nome_turma=nome_turma)
+
 #Rotas para gerenciar a parte das turmas
 @app.route('/criar_turmas')
 def criar_turmas():
@@ -37,13 +61,26 @@ def turmas_criadas():
     nome_turma = request.form.get('nome_turma')
 
     if not nome_turma:
-        return "Erro: Nome da turma é obrigatório.", 400
+        return "Erro: Nome da turma é obrigatório", 400
 
     nova_turma = Turma(nome=nome_turma)
     db.session.add(nova_turma)
     db.session.commit()
 
     return render_template('turmas_criadas.html', turma=nova_turma)
+
+@app.route('/pesquisar_turmas')
+def pesquisar_turmas():
+    return render_template('pesquisar_turmas.html')
+
+@app.route('/turmas_pesquisadas', methods = ["POST"])
+def turmas_pesquisadas():
+    turmas = Turma.query.all()
+
+    if not turmas:
+        return "Nenhuma turma encontrada", 400
+
+    return render_template('turmas_pesquisadas.html', turmas=turmas)
 
 #Rotas para disciplinas
 @app.route('/cadastrar_disciplinas')

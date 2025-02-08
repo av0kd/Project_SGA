@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Turmas</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <title>Cadastrar Disciplinas</title>
+    <link rel="stylesheet" href="../static/style_cadastrar_disciplinas.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Criar Nova Disciplina</h1>
-        <form action="/disciplina_cadastrada" method="POST">
-            <label for="nome_turma">Nome da Disciplina:</label>
-            <input type="text" id="nome_turma" name="nome_disciplina" placeholder="Ex: Matemática" required>
-            <button type="submit" class="botao">Cadastrar Disciplina</button>
+   
+    <div class="second-column">
+        <h2 class="title title-second">Cadastrar Disciplinas</h2>
+        <p class="description description-second">Insira as informações para cadastrar:</p>
+        <form class="form" action="/disciplina_cadastrada" method="post">
+            <label class="label-input" for="nome_turma">
+                <i class="far fa-user icon-modify"></i>
+                <input type="text" id="nome_turma" name="nome_disciplina" placeholder="Ex: Matemática" required>
+            </label>
+            <button class="btn btn-second">Cadastrar</button>        
         </form>
-    </div>
+    </div><!-- a parte de second column -->
+</div>
+
 </body>
 </html>

@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Turmas</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/style_criar_turmas.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Criar Nova Turma</h1>
-        <form action="/turmas_criadas" method="POST">
-            <label for="nome_turma">Nome da Turma:</label>
-            <input type="text" id="nome_turma" name="nome_turma" placeholder="Ex: Turma A" required>
-            <button type="submit" class="botao">Criar Turma</button>
+    <div class="second-column">
+        <h2 class="title title-second">Criar novas turmas</h2>
+        <p class="description description-second">Insira as informações para criar a turma:</p>
+        <form class="form" action="/turmas_criadas" method="POST">
+            <label class="label-input" for="">
+                <i class="far fa-user icon-modify"></i>
+                <input type="text" id="nome_turma" name="nome_turma" placeholder="Ex: Turma A" required>
+            </label>
+            <button class="btn btn-second">Criar turma</button>        
         </form>
-    </div>
+    </div><!-- a parte de second column -->
+</div>
 </body>
 </html>

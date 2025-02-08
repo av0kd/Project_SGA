@@ -1,43 +1,52 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link rel="stylesheet" href="../static/style_adicionar_alunos.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container">
-        <div class="content first-content">
-            <div class="first-column">
-                <h2 class="Titulo">Teste</h2>
-                <p class="descricao">teste</p>
-                <p class="descricao2">teste2</p>
-                <button class="botao">teste4</button>
+ 
+            <div class="second-column">
+                <h2 class="title title-second">Registrar Aluno</h2>
+                <p class="description description-second">Insira as informações para registrar:</p>
+                <form class="form" action="/alunos_adicionados" method="post">
+                    <label class="label-input" for="">
+                        <i class="far fa-user icon-modify"></i>
+                        <input type="text" placeholder="Nome" name="nome">
+                    </label>
+                    
+                    <label class="label-input" for="">
+                        <i class="far fa-user icon-modify"></i>
+                        <input type="Matricula" placeholder="Matricula" name="matricula">
+                    </label>
+                    
+                    <label class="label-input" for="">
+                        <i class="fas fa-user icon-modify"></i>
+                        <input type="ID-Turma" placeholder="ID-Turma" name="turma_id">
+                    </label>
+                    
+                    
+                    <button class="btn btn-second">Registrar</button>        
+                </form>
+            </div><!-- a parte de second column -->
         </div>
-        <div class="content second-content"></div>
-         <h2 class="titulo2">Adicionar Aluno</h2>
-         <p class="Informacao">Insira as Informações</p>
-         <form class="form" action="/alunos_adicionados" method="post">
-            <label class="label_input" for="">
-                <i class="far fa-user icon-modify"></i>
-                <input type="text" placeholder="Nome-teste" name="nome">
-            </label>
-
-            <label class="label_input" for="">
-                <i class="far fa-user envelope-modify"></i>
-                <input type="text" placeholder="Matricula-teste" name="matricula">
-            </label>
-
-            <label class="label_input" for="">
-                <i class="fas fa-lock icon-modify"></i>
-                <input type="text" placeholder="ID-Turma-teste" name="turma_id">
-            </label>
-
-            <button class="Botao-matricular" type="submit">Matricular</button>
-         </form>
-       
+    
     </div>
+    
+</body>
+</html>
 </body>
 </html>

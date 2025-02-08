@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Turmas e Alunos</title>
+</head>
+<body>
+    <h1>Turmas e Alunos</h1>
+    
+    {% if turmas %}
+        <ul>
+            {% for turma in turmas %}
+                <li>
+                    <h2>Turma: {{ turma.nome }}</h2>
+                    <p>Alunos:</p>
+                    <ul>
+                        {% for aluno in turma.alunos %}
+                            <li>{{ aluno.nome }}.</li>
+                        {% else %}
+                            <li>Sem alunos cadastrados nesta turma.</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Não há turmas cadastradas.</p>
+    {% endif %}
+</body>
+</html>
