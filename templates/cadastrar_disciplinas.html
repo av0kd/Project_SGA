@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Turmas</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Criar Nova Disciplina</h1>
+        <form action="/disciplina_cadastrada" method="POST">
+            <label for="nome_turma">Nome da Disciplina:</label>
+            <input type="text" id="nome_turma" name="nome_disciplina" placeholder="Ex: Matemática" required>
+            <button type="submit" class="botao">Cadastrar Disciplina</button>
+        </form>
+    </div>
+</body>
+</html>
