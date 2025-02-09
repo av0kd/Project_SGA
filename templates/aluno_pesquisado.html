@@ -6,8 +6,12 @@
     <title>Aluno Pesquisado</title>
 </head>
 <body>
-    <h1>Informações do Aluno</h1>
-    <p>Nome: {{ nome_aluno }}</p>
-    <p>Turma: {{ nome_turma }}</p>
+    {% for nome_aluno, matricula_aluno, nome_turma in resultado_query %}
+        <p>Nome: {{ nome_aluno }}</p>
+        <p>Matrícula: {{ matricula_aluno }}</p>
+        <p>Turma: {{ nome_turma }}</p>
+        <hr>
+    {% endfor %}
+
 </body>
 </html>

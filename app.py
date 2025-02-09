@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, send_file
-from models import db, Turma, Aluno, Disciplina, Nota
+from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
 
 
 app = Flask(__name__)
@@ -38,18 +38,69 @@ def aluno_pesquisado():
     if not aluno_nome:
         return "Erro: nome do aluno é obrigatório", 400
 
-    # Consulta somente com o nome do aluno e turma
-    resultado = db.session.query(Aluno.nome, Turma.nome) \
-        .join(Turma, Aluno.turma_id == Turma.id) \
-        .filter(Aluno.nome == aluno_nome) \
-        .first()
+    # Consulta o nome do aluno, turma e matricula
+    resultado_query = db.session.query(Aluno.nome, Aluno.matricula, Turma.nome) \
+    .join(Turma, Aluno.turma_id == Turma.id) \
+    .filter(Aluno.nome == aluno_nome) \
+    .all() 
 
-    if not resultado:
-        return f"Nenhum aluno encontrado com o nome '{aluno_nome}'."
+    if not resultado_query:
+        return f"Nenhum aluno encontrado com o nome: {aluno_nome}"
 
-    nome_aluno, nome_turma = resultado
+    return render_template('aluno_pesquisado.html', resultado_query=resultado_query)
 
-    return render_template('aluno_pesquisado.html', nome_aluno=nome_aluno, nome_turma=nome_turma)
+@app.route('/editar_aluno')
+def editar_aluno():
+    return render_template('editar_aluno.html')
+
+@app.route('/aluno_editado', methods = ["POST"])
+def aluno_editado():
+    matricula = request.form.get('matricula')
+    novo_nome = request.form.get('nome_aluno')
+    nova_turma_id = request.form.get('id_turma')
+
+    # Verificar se a matrícula foi fornecida
+    if not matricula:
+        return "Erro: a matrícula do aluno é obrigatória.", 400
+
+    aluno = Aluno.query.filter_by(matricula=matricula).first()
+
+    if not aluno:
+        return f"Aluno com matrícula '{matricula}' não encontrado.", 404
+
+    # Atualizar os dados do aluno se fornecidos
+    if novo_nome:
+        aluno.nome = novo_nome
+
+    if nova_turma_id:
+        aluno.turma_id = nova_turma_id
+
+    db.session.commit()
+    
+    return render_template('aluno_editado.html', aluno=aluno)
+
+@app.route('/deletar_aluno')
+def deletar_aluno():
+    return render_template('deletar_aluno.html')
+
+@app.route('/aluno_deletado', methods = ["POST"])
+def aluno_deletado():
+    matricula_aluno = request.form.get('matricula_aluno')
+
+    if not matricula_aluno:
+        return "Erro: matrícula do aluno é obrigatória.", 400
+    
+    aluno = Aluno.query.filter_by(matricula = matricula_aluno).first()
+
+    if not aluno:
+        return f"Nenhum aluno encontrado com a matrícula '{matricula_aluno}'.", 404
+
+    db.session.delete(aluno)
+    db.session.commit()
+
+    return render_template('aluno_deletado.html', nome_aluno=aluno.nome, matricula_aluno=aluno.matricula)
+
+#<------------------AQUI ENCERRA A PARTE DO CRUD DOS ALUNOS------------------>
 
 #Rotas para gerenciar a parte das turmas
 @app.route('/criar_turmas')
@@ -95,6 +146,32 @@ def disciplina_cadastrada():
     db.session.add(nova_disciplina)
     db.session.commit()
     return render_template('disciplina_cadastrada.html', disciplina = nova_disciplina)
+
+@app.route('/vincular_disciplina')
+def vincular_disciplina():
+    return render_template('vincular_disciplina.html')
+
+@app.route('/disciplina_vinculada', methods=['POST'])
+def disciplina_vinculada():
+    matricula_aluno = request.form.get('matricula_aluno')
+    disciplina_id = request.form.get('disciplina_id')
+
+    # Buscar o aluno pela matricula e disciplina pelo ID
+    aluno = Aluno.query.filter_by(matricula=matricula_aluno).first()
+    disciplina = Disciplina.query.get(disciplina_id)
+
+    if not aluno:
+        return "Aluno não encontrado", 404
+    if not disciplina:
+        return "Disciplina não encontrada", 404
+
+    # Vincular o aluno a disciplina
+    aluno_disciplina = AlunoDisciplina(aluno_id=aluno.id, disciplina_id=disciplina.id)
+    db.session.add(aluno_disciplina)
+    db.session.commit()
+
+    disciplinas = Disciplina.query.all()
+    return render_template('disciplina_vinculada.html', disciplinas=disciplinas)
 
 #Rota para criar o relatório das notas do aluno
 @app.route('/gerar_relatorio', methods=['POST'])

@@ -9,14 +9,14 @@
 <body>
   
     <div class="second-column">
-        <h2 class="title title-second">Pesquisar Alunos</h2>
-        <p class="description description-second">Insira as informações para pesquisar:</p>
-        <form class="form" action="/aluno_pesquisado" method="post">
+        <h2 class="title title-second">Insira a matricula do aluno para excluir</h2>
+        <p class="description description-second">Insira a matricula:</p>
+        <form class="form" action="/aluno_deletado" method="post">
             <label class="label-input" for="">
                 <i class="far fa-user icon-modify"></i>
-                <input type="text" placeholder="Digite" name="nome_aluno">
+                <input type="text" placeholder="Ex: 2020" name="matricula_aluno">
             </label>
-            <button class="btn btn-second">Pesquisar</button>        
+            <button class="btn btn-second">Excluir</button>        
         </form>
     </div>
 </div>

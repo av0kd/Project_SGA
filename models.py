@@ -31,6 +31,16 @@ class Disciplina(db.Model):
     def __repr__(self):
         return f'<Disciplina {self.nome}>'
 
+# Tabela de associação para vincular o aluno a uma disciplina sem precisar vincular uma nota antes
+class AlunoDisciplina(db.Model):
+    aluno_id = db.Column(db.Integer, db.ForeignKey('aluno.id'), primary_key=True)
+    disciplina_id = db.Column(db.Integer, db.ForeignKey('disciplina.id'), primary_key=True)
+    aluno = db.relationship('Aluno', backref=db.backref('disciplinas', lazy=True))
+    disciplina = db.relationship('Disciplina', backref=db.backref('alunos', lazy=True))
+
+    def __repr__(self):
+        return f'<AlunoDisciplina {self.aluno.nome} - {self.disciplina.nome}>'
+
 # Tabela de Notas
 class Nota(db.Model):
     id = db.Column(db.Integer, primary_key=True)
