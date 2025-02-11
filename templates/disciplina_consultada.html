@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Disciplinas</title>
+</head>
+<body>
+    <h1>Consulta de Disciplinas</h1>
+
+    {% if mostrar_todas %}
+        <h2>Todas as Disciplinas:</h2>
+        <ul>
+            {% for disciplina in disciplinas %}
+                <li>{{ disciplina.nome }} (ID: {{ disciplina.id }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h2>Disciplina: {{ disciplina.nome }} (ID: {{ disciplina_id }})</h2>
+
+        <h3>Alunos Matriculados:</h3>
+        {% if alunos %}
+            <ul>
+                {% for aluno in alunos %}
+                    <li>{{ aluno.nome }} (Matrícula: {{ aluno.matricula }})</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Não há alunos vinculados a esta disciplina.</p>
+        {% endif %}
+    {% endif %}
+    
+    <a href="/">Voltar</a>
+</body>
+</html>

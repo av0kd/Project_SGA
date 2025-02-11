@@ -147,65 +147,96 @@ def disciplina_cadastrada():
     db.session.commit()
     return render_template('disciplina_cadastrada.html', disciplina = nova_disciplina)
 
-@app.route('/vincular_disciplina')
+@app.route('/consultar_disciplina')
+def consultar_disciplina():
+    return render_template('consultar_disciplina.html')
+
+@app.route('/disciplina_consultada', methods = ["POST"])
+def disciplina_consultada():
+    nome_disciplina = request.form.get('nome_disciplina')
+
+    if not nome_disciplina:
+        disciplinas = Disciplina.query.all()
+
+        if not disciplinas:
+            return "Nenhuma disciplina cadastrada.", 404
+
+        return render_template('disciplina_consultada.html', disciplinas=disciplinas, mostrar_todas=True)
+    # Consulta da disciplina pelo nome
+    disciplina = Disciplina.query.filter_by(nome=nome_disciplina).first()
+
+    if not disciplina:
+        return f"Disciplina '{nome_disciplina}' não encontrada.", 404
+
+    # Consulta de alunos vinculados à disciplina
+    alunos = Aluno.query.join(AlunoDisciplina).filter(AlunoDisciplina.disciplina_id == disciplina.id).all()
+
+    return render_template('disciplina_consultada.html', disciplina=disciplina, alunos=alunos, disciplina_id=disciplina.id)
+
+@app.route('/vincular_disciplina', methods=['POST', 'GET'])
 def vincular_disciplina():
     return render_template('vincular_disciplina.html')
 
-@app.route('/disciplina_vinculada', methods=['POST'])
+@app.route('/disciplina_vinculada', methods = ["POST"])
 def disciplina_vinculada():
     matricula_aluno = request.form.get('matricula_aluno')
     disciplina_id = request.form.get('disciplina_id')
 
     # Buscar o aluno pela matricula e disciplina pelo ID
-    aluno = Aluno.query.filter_by(matricula=matricula_aluno).first()
+    aluno = Aluno.query.filter_by(matricula = matricula_aluno).first()
     disciplina = Disciplina.query.get(disciplina_id)
 
     if not aluno:
-        return "Aluno não encontrado", 404
+        return "Aluno não encontrado", 400
     if not disciplina:
-        return "Disciplina não encontrada", 404
+        return "Disciplina não encontrada", 400
 
     # Vincular o aluno a disciplina
-    aluno_disciplina = AlunoDisciplina(aluno_id=aluno.id, disciplina_id=disciplina.id)
+    aluno_disciplina = AlunoDisciplina(aluno_id = aluno.id, disciplina_id = disciplina.id)
     db.session.add(aluno_disciplina)
     db.session.commit()
 
     disciplinas = Disciplina.query.all()
-    return render_template('disciplina_vinculada.html', disciplinas=disciplinas)
+    return render_template('vincular_disciplina.html', disciplinas = disciplinas)
 
-#Rota para criar o relatório das notas do aluno
-@app.route('/gerar_relatorio', methods=['POST'])
+@app.route('/gerar_relatorio', methods=['GET', 'POST'])
 def gerar_relatorio():
-    nome_aluno = request.form.get('nome_aluno')
+    if request.method == 'POST':
+        matricula_aluno = request.form.get('matricula_aluno')
+        print(f'Matrícula do aluno recebida: {matricula_aluno}')  # Verifique isso no terminal
 
-    resultado = db.session.query(
-        Aluno.nome, Turma.nome, Disciplina.nome, Nota.valor
-    ).join(Turma, Aluno.turma_id == Turma.id) \
-     .join(Nota, Nota.aluno_id == Aluno.id) \
-     .join(Disciplina, Nota.disciplina_id == Disciplina.id) \
-     .filter(Aluno.nome.ilike(f"%{nome_aluno}%")).all()
+        # Buscando o aluno pela matrícula
+        resultado = db.session.query(
+            Aluno.nome, Turma.nome, Disciplina.nome, Nota.valor
+        ).join(Turma, Aluno.turma_id == Turma.id) \
+         .join(Nota, Nota.aluno_id == Aluno.id) \
+         .join(Disciplina, Nota.disciplina_id == Disciplina.id) \
+         .filter(Aluno.matricula == matricula_aluno).all()
 
-    if not resultado:
-        return "Aluno não encontrado ou sem notas cadastradas."
+        if not resultado:
+            return "Aluno não encontrado ou sem notas cadastradas."
 
-    nome_aluno = resultado[0][0]
-    nome_turma = resultado[0][1]
-    notas_disciplinas = [(disciplina, nota) for _, _, disciplina, nota in resultado]
+        nome_aluno = resultado[0][0]
+        nome_turma = resultado[0][1]
+        notas_disciplinas = [(disciplina, nota) for _, _, disciplina, nota in resultado]
 
-    notas = [nota for _, nota in notas_disciplinas]
-    media = sum(notas) / len(notas)
+        notas = [nota for _, nota in notas_disciplinas]
+        media = sum(notas) / len(notas)
 
-    nome_arquivo = f"relatorio_notas_{nome_aluno}.txt"
+        nome_arquivo = f"relatorio_notas_{nome_aluno}.txt"
 
-    with open(nome_arquivo, 'w') as arquivo:
-        arquivo.write(f"Nome do Aluno: {nome_aluno}\n")
-        arquivo.write(f"Turma: {nome_turma}\n\n")
-        arquivo.write("Disciplina\tNota\n")
-        for disciplina, nota in notas_disciplinas:
-            arquivo.write(f"{disciplina}\t{nota}\n")
-        arquivo.write(f"Média Final: {media:.2f}\n")
+        with open(nome_arquivo, 'w') as arquivo:
+            arquivo.write(f"Nome do Aluno: {nome_aluno}\n")
+            arquivo.write(f"Turma: {nome_turma}\n\n")
+            arquivo.write("Disciplina\tNota\n")
+            for disciplina, nota in notas_disciplinas:
+                arquivo.write(f"{disciplina}\t{nota}\n")
+            arquivo.write(f"Média Final: {media:.2f}\n")
 
-    return send_file(nome_arquivo, as_attachment=True)
+        return send_file(nome_arquivo, as_attachment=True)
+
+    # Para o caso de o método ser GET ou se o usuário acessar diretamente a página
+    return render_template('gerar_relatorio.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

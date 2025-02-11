@@ -1,0 +1,6 @@
+Nome do Aluno: Sicrano
+Turma: Teste A
+
+Disciplina	Nota
+Calculo VIII	7.0
+Média Final: 7.00

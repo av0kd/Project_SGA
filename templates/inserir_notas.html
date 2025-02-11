@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserir Notas</title>
+</head>
+<body>
+    <h1>Inserir Notas para o Aluno</h1>
+
+    <form method="POST">
+        <label for="matricula_aluno">Matrícula:</label>
+        <input type="text" name="matricula_aluno" required>
+        <button type="submit">Buscar Aluno</button>
+    </form>
+
+    {% if aluno %}
+        <h2>Disciplinas do Aluno: {{ aluno.nome }}</h2>
+        
+        <form method="POST">
+            <input type="hidden" name="matricula_aluno" value="{{ aluno.matricula }}">
+            
+            {% for aluno_disciplina in aluno.disciplinas %}
+                <label for="nota_{{ aluno_disciplina.disciplina.id }}">{{ aluno_disciplina.disciplina.nome }}:</label>
+                <input type="number" name="nota_{{ aluno_disciplina.disciplina.id }}" step="0.1" min="0" max="10" required>
+                <br>
+            {% endfor %}
+
+            <button type="submit">Salvar Notas</button>
+        </form>
+    {% endif %}
+</body>
+</html>
