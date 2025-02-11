@@ -199,6 +199,35 @@ def disciplina_vinculada():
     disciplinas = Disciplina.query.all()
     return render_template('vincular_disciplina.html', disciplinas = disciplinas)
 
+@app.route('/inserir_notas', methods=['GET', 'POST'])
+def inserir_notas():
+    if request.method == 'POST':
+        matricula_aluno = request.form.get('matricula_aluno')
+        
+        # Buscar o aluno pela matrícula
+        aluno = Aluno.query.filter_by(matricula=matricula_aluno).first()
+
+        if not aluno:
+            return "Aluno não encontrado", 404
+
+        if 'nota_' in ','.join(request.form.keys()):  # Se houver notas sendo enviadas
+            # Atualizar as notas para cada disciplina vinculada ao aluno
+            for aluno_disciplina in aluno.disciplinas:
+                disciplina_id = aluno_disciplina.disciplina.id
+                nota_valor = request.form.get(f'nota_{disciplina_id}')
+
+                if nota_valor:
+                    nova_nota = Nota(aluno_id=aluno.id, disciplina_id=disciplina_id, valor=float(nota_valor))
+                    db.session.add(nova_nota)
+            
+            db.session.commit()
+            return "Notas inseridas com sucesso"
+
+        # Renderizar o formulário com as disciplinas do aluno
+        return render_template('inserir_notas.html', aluno=aluno)
+    
+    return render_template('inserir_notas.html', aluno=None)
+
 @app.route('/gerar_relatorio', methods=['GET', 'POST'])
 def gerar_relatorio():
     if request.method == 'POST':
