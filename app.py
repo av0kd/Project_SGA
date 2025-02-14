@@ -83,18 +83,25 @@ def aluno_editado():
 def deletar_aluno():
     return render_template('deletar_aluno.html')
 
-@app.route('/aluno_deletado', methods = ["POST"])
+@app.route('/aluno_deletado', methods=["POST"])
 def aluno_deletado():
     matricula_aluno = request.form.get('matricula_aluno')
 
     if not matricula_aluno:
         return "Erro: matrícula do aluno é obrigatória.", 400
-    
-    aluno = Aluno.query.filter_by(matricula = matricula_aluno).first()
+
+    aluno = Aluno.query.filter_by(matricula=matricula_aluno).first()
 
     if not aluno:
         return f"Nenhum aluno encontrado com a matrícula '{matricula_aluno}'.", 404
 
+    # Remover todas as notas associadas ao aluno
+    Nota.query.filter_by(aluno_id=aluno.id).delete()
+
+    # Remover registros da tabela intermediária AlunoDisciplina
+    AlunoDisciplina.query.filter_by(aluno_id=aluno.id).delete()
+
+    # Deletar o próprio aluno
     db.session.delete(aluno)
     db.session.commit()
 
@@ -177,13 +184,13 @@ def disciplina_consultada():
 def vincular_disciplina():
     return render_template('vincular_disciplina.html')
 
-@app.route('/disciplina_vinculada', methods = ["POST"])
+@app.route('/disciplina_vinculada', methods=["POST"])
 def disciplina_vinculada():
     matricula_aluno = request.form.get('matricula_aluno')
     disciplina_id = request.form.get('disciplina_id')
 
     # Buscar o aluno pela matricula e disciplina pelo ID
-    aluno = Aluno.query.filter_by(matricula = matricula_aluno).first()
+    aluno = Aluno.query.filter_by(matricula=matricula_aluno).first()
     disciplina = Disciplina.query.get(disciplina_id)
 
     if not aluno:
@@ -191,13 +198,16 @@ def disciplina_vinculada():
     if not disciplina:
         return "Disciplina não encontrada", 400
 
-    # Vincular o aluno a disciplina
-    aluno_disciplina = AlunoDisciplina(aluno_id = aluno.id, disciplina_id = disciplina.id)
-    db.session.add(aluno_disciplina)
+    # Verifica se o aluno já está vinculado à disciplina
+    if AlunoDisciplina.query.filter_by(aluno_id=aluno.id, disciplina_id=disciplina.id).first():
+        return "O aluno já está vinculado a essa disciplina!", 400
+
+    # Criar o vínculo entre aluno e disciplina
+    novo_vinculo = AlunoDisciplina(aluno_id=aluno.id, disciplina_id=disciplina.id)
+    db.session.add(novo_vinculo)
     db.session.commit()
 
-    disciplinas = Disciplina.query.all()
-    return render_template('vincular_disciplina.html', disciplinas = disciplinas)
+    return "Aluno vinculado à disciplina com sucesso!"
 
 @app.route('/inserir_notas', methods=['GET', 'POST'])
 def inserir_notas():
@@ -210,29 +220,36 @@ def inserir_notas():
         if not aluno:
             return "Aluno não encontrado", 404
 
-        if 'nota_' in ','.join(request.form.keys()):  # Se houver notas sendo enviadas
-            # Atualizar as notas para cada disciplina vinculada ao aluno
-            for aluno_disciplina in aluno.disciplinas:
-                disciplina_id = aluno_disciplina.disciplina.id
-                nota_valor = request.form.get(f'nota_{disciplina_id}')
+        # Se houver notas no formulário, salvar no banco de dados
+        notas_enviadas = {key: value for key, value in request.form.items() if key.startswith('nota_')}
+        
+        if notas_enviadas:
+            for key, valor_nota in notas_enviadas.items():
+                disciplina_id = int(key.split('_')[1])  # Extrai o ID da disciplina
+                valor_nota = float(valor_nota)
 
-                if nota_valor:
-                    nova_nota = Nota(aluno_id=aluno.id, disciplina_id=disciplina_id, valor=float(nota_valor))
-                    db.session.add(nova_nota)
-            
+                # Verifica se a nota já existe
+                nota_existente = Nota.query.filter_by(aluno_id=aluno.id, disciplina_id=disciplina_id).first()
+
+                if nota_existente:
+                    nota_existente.valor = valor_nota  # Atualiza a nota existente
+                else:
+                    nova_nota = Nota(aluno_id=aluno.id, disciplina_id=disciplina_id, valor=valor_nota)
+                    db.session.add(nova_nota)  # Insere uma nova nota
+
             db.session.commit()
-            return "Notas inseridas com sucesso"
+            return "Notas inseridas/atualizadas com sucesso"
 
         # Renderizar o formulário com as disciplinas do aluno
         return render_template('inserir_notas.html', aluno=aluno)
-    
+
     return render_template('inserir_notas.html', aluno=None)
+
 
 @app.route('/gerar_relatorio', methods=['GET', 'POST'])
 def gerar_relatorio():
     if request.method == 'POST':
         matricula_aluno = request.form.get('matricula_aluno')
-        print(f'Matrícula do aluno recebida: {matricula_aluno}')  # Verifique isso no terminal
 
         # Buscando o aluno pela matrícula
         resultado = db.session.query(
@@ -255,12 +272,14 @@ def gerar_relatorio():
         nome_arquivo = f"relatorio_notas_{nome_aluno}.txt"
 
         with open(nome_arquivo, 'w') as arquivo:
-            arquivo.write(f"Nome do Aluno: {nome_aluno}\n")
+            arquivo.write("SGA BOLETIM\n")
+            arquivo.write(f"\nNome do Aluno: {nome_aluno}\n")
             arquivo.write(f"Turma: {nome_turma}\n\n")
             arquivo.write("Disciplina\tNota\n")
             for disciplina, nota in notas_disciplinas:
                 arquivo.write(f"{disciplina}\t{nota}\n")
-            arquivo.write(f"Média Final: {media:.2f}\n")
+                
+            arquivo.write(f"\nMédia Final: {media:.2f}\n")
 
         return send_file(nome_arquivo, as_attachment=True)
 
