@@ -2,16 +2,27 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style_pesquisar_turmas.css">
     <title>Pesquisar Turma</title>
 </head>
 <body>
-    <h1>Pesquisar por Turmas e Alunos</h1>
+    <div class="second-column">
+        <h2 class="title title-second">Pesquisar por Turmas e Alunos</h2>
+        <p class="description description-second">Insira as informações para pesquisar:</p>
+        <form class="form" action="/turmas_pesquisadas" method="post">
+            <label class="label-input" for="nome_turma">
+                <i class="far fa-user icon-modify"></i>
+                <input type="text" id="nome_turma" placeholder="Nome da turma:" name="nome_turma">
+            </label>
+            <button class="btn btn-second" type="submit">Pesquisar</button>        
+        </form>
+        <a href="/">Voltar</a>
+    </div>
+    </div>
     
-    <form action="/turmas_pesquisadas" method="POST">
-        <label for="nome_turma">Digite o nome da turma:</label>
-        <input type="text" id="nome_turma" name="nome_turma" required>
-        <button type="submit">Pesquisar</button>
-    </form>
-
+    </div>
 </body>
 </html>
+

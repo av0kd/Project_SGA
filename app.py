@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, flash, redirect, url_for
 from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
 
 
@@ -131,14 +131,45 @@ def turmas_criadas():
 def pesquisar_turmas():
     return render_template('pesquisar_turmas.html')
 
-@app.route('/turmas_pesquisadas', methods = ["POST"])
+@app.route('/turmas_pesquisadas', methods=["POST"])
 def turmas_pesquisadas():
-    turmas = Turma.query.all()
+    nome_turma = request.form.get('nome_turma', '').strip()  # Obtém o nome e remove espaços extras
+
+    if nome_turma:  
+        # Filtra as turmas pelo nome informado
+        turmas = Turma.query.filter(Turma.nome.ilike(f"%{nome_turma}%")).all()
+    else:
+        # Se não houver nome informado, retorna todas as turmas
+        turmas = Turma.query.all()
 
     if not turmas:
-        return "Nenhuma turma encontrada", 400
+        flash("Nenhuma turma encontrada!", "warning")  # Mensagem de feedback para o usuário
+        return redirect(url_for('pagina_da_pesquisa'))  # Redireciona para a página de pesquisa
 
     return render_template('turmas_pesquisadas.html', turmas=turmas)
+
+@app.route('/deletar_turma', methods = ["GET"])
+def deletar_turma():
+    return render_template('deletar_turma.html')
+
+
+@app.route('/turma_deletada', methods=['POST'])
+def turma_deletada():
+    if request.method == "POST":
+        turma_id = request.form.get("turma_id")
+
+        if not turma_id:
+            return "Erro: ID da turma é obrigatório", 400
+
+        turma = Turma.query.get(turma_id)
+
+        if not turma:
+            return "Turma não encontrada", 400
+
+        db.session.delete(turma)
+        db.session.commit()
+
+        return render_template('/turma_deletada.html')
 
 #<------------------AQUI ENCERRA A PARTE DO CREATE E RECOVERY DAS TURMAS------------------>
 
@@ -242,7 +273,6 @@ def inserir_notas():
                     db.session.add(nova_nota)  # Insere uma nova nota
 
             db.session.commit()
-            return "Notas inseridas/atualizadas com sucesso"
 
         # Renderizar o formulário com as disciplinas do aluno
         return render_template('inserir_notas.html', aluno=aluno)

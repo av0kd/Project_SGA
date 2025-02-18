@@ -4,8 +4,8 @@ Nome do Aluno: Adri
 Turma: Teste A
 
 Disciplina	Nota
-Calculo VIII	6.5
-Mecânica Quântica XV	7.0
-Português	9.0
+Calculo VIII	8.0
+Mecânica Quântica XV	8.0
+Português	8.0
 
-Média Final: 7.50
+Média Final: 8.00

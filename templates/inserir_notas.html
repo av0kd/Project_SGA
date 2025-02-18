@@ -1,39 +1,47 @@
-<form method="POST">
-    <label for="matricula_aluno">Matrícula:</label>
-    <input type="text" name="matricula_aluno" required>
-    <button type="submit">Buscar Aluno</button>
-</form>
-
-{% if aluno %}
-    <h2>Disciplinas do Aluno: {{ aluno.nome }}</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style_inserir_notas.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>Inserir Notas</title>
+</head>
+<body>
+    <div class="second-column">
+        <h2 class="title title-second">Inserir nota de Aluno</h2>
+        <form class="form" method="post">
+            <label class="label-input" for="matricula_aluno">
+                <i class="far fa-user icon-modify"></i>
+                <input type="text" placeholder="Matricula do aluno:" name="matricula_aluno">
+            </label>
+            <button class="btn btn-second">Buscar Aluno</button>        
+        </form>
+        <a href="/">Voltar para o inicio</a>
+    </div>
+    </div>
     
-    <form method="POST">
-        <input type="hidden" name="matricula_aluno" value="{{ aluno.matricula }}">
+    
+    {% if aluno %}
+        <h2>Disciplinas do Aluno: {{ aluno.nome }}</h2>
         
-        {% for aluno_disciplina in aluno.disciplinas %}
-        <label for="nota_{{ aluno_disciplina.disciplina.id }}">{{ aluno_disciplina.disciplina.nome }}:</label>
-        <input type="number" name="nota_{{ aluno_disciplina.disciplina.id }}" step="0.1" min="0" max="10" required>
-        <br>
+        <form method="POST">
+            <input type="hidden" name="matricula_aluno" value="{{ aluno.matricula }}">
+            
+            {% for aluno_disciplina in aluno.disciplinas %}
+            <label for="nota_{{ aluno_disciplina.disciplina.id }}">{{ aluno_disciplina.disciplina.nome }}:</label>
+            <input type="number" name="nota_{{ aluno_disciplina.disciplina.id }}" step="0.1" min="0" max="10" required>
+            <br>
         {% endfor %}
+        
     
+            <button type="submit">Salvar Notas</button>
+        </form>
+    {% endif %}
+    
+    
+</body>
+</html>
 
-        <button type="submit">Salvar Notas</button>
-    </form>
-{% endif %}
-
-{% if aluno %} 
- <div class="second-column">
-    <h2 class="title title-second">Pesquisar Alunos</h2>
-    <p class="description description-second">Insira as informações para pesquisar:</p>
-    <form class="form" action="/aluno_pesquisado" method="post">
-        <label class="label-input" for="">
-            <i class="far fa-user icon-modify"></i>
-            <input type="text" placeholder="Ex: Fulano" name="nome_aluno">
-        </label>
-        <button class="btn btn-second">Pesquisar</button>        
-    </form>
- </div>
- </div>
-
- </div>
-{% endif %}
+  

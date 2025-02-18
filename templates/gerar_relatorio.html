@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style_gerar_relatorio.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <title>Gerar Relatório</title>
 </head>
 <body>
-    <h1>Gerar Relatório de Notas</h1>
-
-    <form method="POST">
-        <label for="nome_aluno">Numero da Matricula:</label>
-        <input type="text" name="matricula_aluno" required>
-        <button type="submit">Gerar Relatório</button>
-    </form>
-    <a href="/">Voltar para o inicio</a>
+    <div class="second-column">
+        <h2 class="title title-second">Gerar Relatório de Notas</h2>
+        <form class="form" method="post">
+            <label class="label-input" for="nome_aluno">
+                <i class="far fa-user icon-modify"></i>
+                <input type="text" placeholder="Numero da Matricula:" name="matricula_aluno" required>
+            </label>  
+            <button class="btn btn-second" type="submit">Gerar Relatório</button>        
+        </form>
+        <a href="/">Voltar para o inicio</a>
+    </div>
+    </div>
 </body>
 </html>
+
