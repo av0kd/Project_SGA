@@ -140,6 +140,8 @@ def turmas_pesquisadas():
 
     return render_template('turmas_pesquisadas.html', turmas=turmas)
 
+#<------------------AQUI ENCERRA A PARTE DO CREATE E RECOVERY DAS TURMAS------------------>
+
 #Rotas para disciplinas
 @app.route('/cadastrar_disciplinas')
 def cadastrar_disciplinas():
@@ -208,6 +210,8 @@ def disciplina_vinculada():
     db.session.commit()
 
     return "Aluno vinculado à disciplina com sucesso!"
+
+#<------------------AQUI ENCERRA A PARTE DE CRIAR/CONSULTAR/VINCULAR AS DISCIPLINAS------------------>
 
 @app.route('/inserir_notas', methods=['GET', 'POST'])
 def inserir_notas():
@@ -285,6 +289,8 @@ def gerar_relatorio():
 
     # Para o caso de o método ser GET ou se o usuário acessar diretamente a página
     return render_template('gerar_relatorio.html')
+
+#<------------------AQUI ENCERRA A PARTE DE VINCULAR AS NOTAS E GERAR UM TXT DAS NOTAS------------------>
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -20,3 +20,20 @@
         <button type="submit">Salvar Notas</button>
     </form>
 {% endif %}
+
+{% if aluno %} 
+ <div class="second-column">
+    <h2 class="title title-second">Pesquisar Alunos</h2>
+    <p class="description description-second">Insira as informações para pesquisar:</p>
+    <form class="form" action="/aluno_pesquisado" method="post">
+        <label class="label-input" for="">
+            <i class="far fa-user icon-modify"></i>
+            <input type="text" placeholder="Ex: Fulano" name="nome_aluno">
+        </label>
+        <button class="btn btn-second">Pesquisar</button>        
+    </form>
+ </div>
+ </div>
+
+ </div>
+{% endif %}
