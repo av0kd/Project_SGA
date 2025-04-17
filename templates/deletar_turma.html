@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
     <title>Deletar Turma</title>
 </head>
 <body>
@@ -11,9 +12,9 @@
     <form method="POST" action="/turma_deletada">
         <label for="turma_id">ID da Turma:</label>
         <input type="text" name="turma_id" required>
-        <button type="submit">Deletar</button>
+        <button class="btn btn-second" type="submit">Deletar</button>
+        <a  href="/" class="btn btn-second">Voltar</a>
     </form>
 
-    <a href="/">Voltar</a>
 </body>
 </html>

@@ -46,7 +46,7 @@ body {
     color: #fff;
 }
 .title-second {
-    color: #4CAF50;
+    color: #4CA78A;
 }
 .description {
     font-size: 14px;
@@ -71,6 +71,7 @@ body {
     align-self: center;
     border: none;
     margin-top: 1rem;
+    text-decoration: none;
 }
 .btn-primary {
     background-color: transparent;
@@ -82,7 +83,7 @@ body {
     color: #58af9b;
 }
 .btn-second {
-    background-color: #4CAF50;
+    background-color: #4CA78A;
     border: 1px solid #58af9b;
     transition: background-color .5s;
 }

@@ -1,52 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar Aluno</title>
-</head>
-<body>
-    <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-    <link rel="stylesheet" href="../static/style_adicionar_alunos.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-</head>
-<body>
- 
-            <div class="second-column">
-                <h2 class="title title-second">Registrar Aluno</h2>
-                <p class="description description-second">Insira as informações para registrar:</p>
-                <form class="form" action="/alunos_adicionados" method="post">
-                    <label class="label-input" for="">
-                        <i class="far fa-user icon-modify"></i>
-                        <input type="text" placeholder="Nome" name="nome">
-                    </label>
-                    
-                    <label class="label-input" for="">
-                        <i class="far fa-user icon-modify"></i>
-                        <input type="Matricula" placeholder="Matricula" name="matricula">
-                    </label>
-                    
-                    <label class="label-input" for="">
-                        <i class="fas fa-user icon-modify"></i>
-                        <input type="ID-Turma" placeholder="ID-Turma" name="turma_id">
-                    </label>
-                    
-                    
-                    <button class="btn btn-second">Registrar</button>        
-                </form>
-            </div><!-- a parte de second column -->
-        </div>
-    
+{% extends "model.html" %}
+
+{% block head %}
+    <title>SGA - Adicionar Alunos</title>
+{% endblock %}
+
+{% block content %}
+    <div class="second-column">
+        <h2 class="title title-second">Adicionar Alunos</h2>
+        <p class="description description-second">Insira as informações para registrar:</p>
+
+        <form class="form" action="/alunos_adicionados" method="post">
+            <label class="label-input">
+                <i class="far fa-user icon-modify"></i>
+                <input type="text" placeholder="Nome" name="nome" required>
+            </label>
+
+            <label class="label-input">
+                <i class="far fa-id-badge icon-modify"></i>
+                <input type="text" placeholder="Matrícula" name="matricula" required>
+            </label>
+
+            <label class="label-input">
+                <i class="fas fa-users icon-modify"></i>
+                <input type="text" placeholder="ID da Turma" name="turma_id" required>
+            </label>
+
+            <button class="btn btn-second" type="submit">Registrar</button>        
+        </form>
+
+        <a href="/" class="btn btn-second">Voltar</a>
     </div>
-    
-</body>
-</html>
-</body>
-</html>
+{% endblock %}
