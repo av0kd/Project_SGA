@@ -24,6 +24,9 @@ body, html {
     justify-content: space-between;
     padding: 20px 0;
     color: white;
+    position: fixed; /* fixa na lateral esquerda */
+    top: 0;
+    left: 0;
 }
 
 .logo {
@@ -41,6 +44,7 @@ body, html {
     flex-direction: column;
     gap: 12px;
     padding: 0 1rem;
+    flex-grow: 1;
 }
 
 .menu a {
@@ -49,7 +53,7 @@ body, html {
     font-weight: 500;
     padding: 12px;
     border-bottom: 1px solid #ffffff55;
-    transition: background 0.2s;
+    transition: background 20s;
     border-radius: 6px;
 }
 
@@ -61,7 +65,7 @@ body, html {
 .user-info {
     background-color: #3e8d74;
     margin: 0 1rem;
-    margin-top: 40px;
+    margin-top: auto;
     padding: 1rem;
     border-radius: 8px;
     text-align: center;
@@ -85,7 +89,67 @@ body, html {
 }
 
 .main-content {
-    flex: 1;
+    margin-left: 15%;
     padding: 2rem;
+    height: 100vh;
+    overflow-y: auto; /* conteúdo rola dentro dessa área */
+    width: 85%;
     background-color: #e5e5e5;
 }
+
+ /* Dropdown Button */
+ .dropbtn {
+    width: 100%;
+    text-align: left;
+    padding: 16px;
+    font-size: 16px;
+    background-color: #4CAF8F;
+    color: white;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.3s;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ffffff55;
+  }
+  
+  .dropbtn:hover {
+    background-color: #3e8d74;
+  }
+  
+  .dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    background-color: #3e8d74;
+    border-radius: 6px;
+  }
+  
+  .dropdown-open {
+    /* transition: max-height 0.7s ease; */
+    max-height: 500px; /* ou quanto precisar */
+  }
+  
+  .dropdown-close {
+    transition: max-height 0.5s ease;
+
+    max-height: 0;
+  }
+  
+  .dropdown-content a {
+    display: block;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    transition: background 0.2s;
+    border-bottom: 1px solid #ffffff33;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #2f6655;
+  }
+  
+  .dropdown-content.show {
+    max-height: 500px; /* valor alto para comportar todos os itens */
+  }
+  

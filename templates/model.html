@@ -8,8 +8,9 @@
     <title>SGA -</title>
     {% endblock %}
 
-    <link rel="stylesheet" href="../static/style.css">
-    <link rel="stylesheet" href="../static/index.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <script src="/static/script/script.js"></script>
 </head>
 <body>
     <div class="container">
@@ -19,12 +20,54 @@
             </div>
             <nav class="menu">
                 <a href="/">INÍCIO</a>
-                <a href="/adicionar_alunos">ALUNOS</a>
-                <a href="/turmas">TURMAS</a>
-                <a href="/disciplinas">DISCIPLINAS</a>
-                <a href="/professores">PROFESSORES</a>
-                <a href="/relatorios">RELATÓRIOS</a>
-                <a href="/digitacao">DIGITAÇÃO</a>
+                <div class="dropdown">
+                    <button onclick="myFunction(this)" class="dropbtn">ALUNOS</button>
+                    <div id="myDropdown" class="dropdown-content">
+                      <a href="/adicionar_alunos">Cadastrar aluno</a>
+                      <a href="/deletar_aluno">Deletar aluno</a>
+                      <a href="/editar_aluno">Editar aluno</a>
+                      <a href="/pesquisar_alunos">Pesquisar aluno</a>
+                    </div>
+                </div> 
+                
+<!------------------------------------------------------------------------------------->
+                <div class="dropdown">
+                    <button onclick="myFunction(this)" class="dropbtn">TURMAS</button>
+                    <div id="myDropdown" class="dropdown-content">
+                      <a href="/criar_turmas">Cadastrar turma</a>
+                      <a href="/deletar_turma">Deletar turma</a>
+                      <a href="/pesquisar_turmas">Pesquisar turma</a>
+                    </div>
+                </div> 
+<!------------------------------------------------------------------------------------->
+                <div class="dropdown">
+                    <button onclick="myFunction(this)" class="dropbtn">DISCIPLINAS</button>
+                    <div id="myDropdown" class="dropdown-content">
+                    <a href="/cadastrar_disciplinas">Cadastrar disciplinas</a>
+                    <!--<a href="/editar_disciplina">Editar Disciplina</a>-->
+                    <!--<a href="/deletar_disciplina">Deletar Disciplina</a>-->
+                    <a href="/consultar_disciplina">Pesquisar disciplina</a>
+                    </div>
+                </div> 
+<!------------------------------------------
+
+                <div class="dropdown">
+                    <button onclick="myFunction(this)" class="dropbtn">PROFESSORES</button>
+                    <div id="myDropdown" class="dropdown-content">
+                    <a href="/editar_disciplina">Editar Disciplina</a>
+                    <a href="/deletar_disciplina">Deletar Disciplina</a>
+                    </div>
+                </div> 
+                <div class="dropdown">
+                    <button onclick="myFunction(this)" class="dropbtn">DIGITAÇÃO</button>
+                    <div id="myDropdown" class="dropdown-content">
+                    <a href="/editar_disciplina">Editar Disciplina</a>
+                    <a href="/deletar_disciplina">Deletar Disciplina</a>
+                    </div>
+                </div> 
+            ------------------>
+                
+                <a href="/gerar_relatorio">RELATÓRIOS</a>
             </nav>
             <div class="user-info">
                 <p>Matrícula:<br><strong>20240007694</strong></p>
