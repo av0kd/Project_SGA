@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <title>Editar Aluno</title>
-</head>
-<body>
-  
+{% extends "model.html" %}
+
+{% block title %}
+    <title>SGA - Editar aluno</title>
+{% endblock %}
+
+{% block content %}
+
     <div class="second-column">
         <h2 class="title title-second">Editar Informações do Aluno</h2>
         <p class="description description-second">Insira a matricula para encontrar o aluno:</p>
@@ -29,12 +25,7 @@
                 <input type="text" placeholder="Informe o ID da turma (opcional)" name="id_turma">
             </label>
             <button class="btn btn-second">Editar</button> 
-            <a  href="/" class="btn btn-second">Voltar</a>
         </form>
     </div>
-</div>
 
-</div>
-
-</body>
-</html>
+{% endblock %}

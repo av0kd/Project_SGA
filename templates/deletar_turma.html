@@ -1,20 +1,20 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
-    <title>Deletar Turma</title>
-</head>
-<body>
-    <h1>Deletar Turma</h1>
+{% extends "model.html" %}
 
-    <form method="POST" action="/turma_deletada">
-        <label for="turma_id">ID da Turma:</label>
-        <input type="text" name="turma_id" required>
+{% block title %}
+    <title>SGA - Deletar turma</title>
+{% endblock %}
+
+{% block content %}
+    <div class="second-column">
+    <h2 class="title title-second">Deletar Turma</h2>
+    <p class="description description-second">ID da turma para excluir:</p>
+    <form class="form" method="POST" action="/turma_deletada">
+        <label class="label-input" for="turma_id">
+            <i class="far fa-user icon-modify"></i>
+            <input type="text" placeholder="Ex: Turma B" name="turma_id" required>
+        </label>
         <button class="btn btn-second" type="submit">Deletar</button>
-        <a  href="/" class="btn btn-second">Voltar</a>
     </form>
+    </div>
 
-</body>
-</html>
+{% endblock %}

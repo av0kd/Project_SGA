@@ -1,11 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta de Disciplinas</title>
-</head>
-<body>
+{% extends "model.html" %}
+
+{% block title %}
+    <title>SGA - Consulta de disciplinas</title>
+{% endblock %}
+
+{% block content %}
+    <title></title>
+
+
     <h1>Consulta de Disciplinas</h1>
 
     {% if mostrar_todas %}
@@ -30,6 +32,4 @@
         {% endif %}
     {% endif %}
     
-    <a  href="/" class="btn btn-second">Voltar</a>
-</body>
-</html>
+{% endblock %}

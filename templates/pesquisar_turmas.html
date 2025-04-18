@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/style.css">
-    <title>Pesquisar Turma</title>
-</head>
-<body>
+{% extends "model.html" %}
+
+{% block title %}
+    <title>SGA - Pesquisar turma</title>
+{% endblock %}
+
+{% block content %}
+
     <div class="second-column">
         <h2 class="title title-second">Pesquisar por Turmas e Alunos</h2>
         <p class="description description-second">Insira as informações para pesquisar:</p>
@@ -18,11 +16,6 @@
             </label>
             <button class="btn btn-second" type="submit">Pesquisar</button>        
         </form>
-        <a  href="/" class="btn btn-second">Voltar</a>
     </div>
-    </div>
-    
-    </div>
-</body>
-</html>
 
+{% endblock %}

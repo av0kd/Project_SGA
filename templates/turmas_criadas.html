@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turma Criada</title>
-    <link rel="stylesheet" href="../static/style.css">
-</head>
-<body>
+{% extends "model.html" %}
+
+{% block title %}
+    <title>SGA - Turma criada</title>
+{% endblock %}
+
+{% block content %}
+
     <div class="container">
         <h1>Turma Criada com Sucesso!</h1>
         <p>Nome da Turma: {{ turma.nome }}</p>
         <a href="/criar_turmas" class="botao">Criar Outra Turma</a>
-        <a  href="/" class="btn btn-second">Voltar</a>
     </div>
-</body>
-</html>
+
+{% endblock %}

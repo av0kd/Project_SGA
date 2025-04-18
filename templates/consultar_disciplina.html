@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
-    <title>Pesquisar Aluno</title>
-</head>
-<body>
+{% extends "model.html" %}
+
+{% block title %}
+    <title>SGA - Consultar disciplinas</title>
+{% endblock %}
+
+{% block content %}
   
     <div class="second-column">
         <h2 class="title title-second">Pesquisar Disciplina</h2>
@@ -16,13 +14,8 @@
                 <i class="far fa-user icon-modify"></i>
                 <input type="text" placeholder="Ex: Matemática" name="nome_disciplina">
             </label>
-            <button class="btn btn-second">Pesquisar Disciplina</button> 
-            <a  href="/" class="btn btn-second">Voltar</a>       
+            <button class="btn btn-second">Pesquisar Disciplina</button>
         </form>
     </div>
-</div>
 
-</div>
-
-</body>
-</html>
+{% endblock %}

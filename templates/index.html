@@ -1,38 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGA - Sistema de Gestão Escolar</title>
-    <link rel="stylesheet" href="../static/index.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="../static/img/sga_logo_img.png" alt="Logo SGA">
-            </div>
-            <nav class="menu">
-                <a href="/">INÍCIO</a>
-                <a href="/adicionar_alunos">ALUNOS</a>
-                <a href="/turmas">TURMAS</a>
-                <a href="/disciplinas">DISCIPLINAS</a>
-                <a href="/professores">PROFESSORES</a>
-                <a href="/relatorios">RELATÓRIOS</a>
-                <a href="/digitacao">DIGITAÇÃO</a>
-            </nav>
-            <div class="user-info">
-                <p>Matrícula:<br><strong>20240007694</strong></p>
-                <a href="/logout" class="logout-btn">
-                    <i class="fas fa-sign-out-alt"> SAIR</i> 
-                </a>
-            </div>
-        </aside>
-        <main class="main-content">
-            <!-- Conteúdo principal vai aqui -->
-        </main>
-    </div>
-</body>
-</html>
+{% extends "model.html" %}
+
+{% block title %}
+<title>SGA - Início</title>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Bem-vindo</h1>
+
+{% endblock %}

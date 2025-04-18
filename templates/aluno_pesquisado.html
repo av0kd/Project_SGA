@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aluno Pesquisado</title>
-</head>
-<body>
+{% extends "model.html" %}
+
+{% block title %}
+    <title>SGA - Aluno pesquisado</title>
+{% endblock %}
+
+{% block content %}
+
     {% for nome_aluno, matricula_aluno, nome_turma in resultado_query %}
         <p>Nome: {{ nome_aluno }}</p>
         <p>Matrícula: {{ matricula_aluno }}</p>
@@ -13,7 +13,4 @@
         <hr>
     {% endfor %}
 
-    <a  href="/" class="btn btn-second">Voltar</a>
-
-</body>
-</html>
+{% endblock %}

@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Turmas</title>
-    <link rel="stylesheet" href="../static/style.css">
-</head>
-<body>
+{% extends "model.html" %}
+
+{% block title %}
+    <title>SGA - Criar turmas</title>
+{% endblock %}
+
+{% block content %}
+
     <div class="second-column">
         <h2 class="title title-second">Criar novas turmas</h2>
         <p class="description description-second">Insira as informações para criar a turma:</p>
@@ -16,9 +15,7 @@
                 <input type="text" id="nome_turma" name="nome_turma" placeholder="Ex: Turma A" required>
             </label>
             <button class="btn btn-second">Criar turma</button>        
-            <a  href="/" class="btn btn-second">Voltar</a>
         </form>
-    </div><!-- a parte de second column -->
-</div>
-</body>
-</html>
+    </div>
+
+{% endblock %}

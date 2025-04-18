@@ -50,11 +50,12 @@ body, html {
     padding: 12px;
     border-bottom: 1px solid #ffffff55;
     transition: background 0.2s;
+    border-radius: 6px;
 }
 
 .menu a:hover {
     background-color: #3e8d74;
-    border-radius: 6px;
+    
 }
 
 .user-info {

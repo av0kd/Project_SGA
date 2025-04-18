@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Turmas e Alunos</title>
-</head>
-<body>
+{% extends "model.html" %}
+
+{% block title %}
+    <title>SGA - Turma pesquisada</title>
+{% endblock %}
+
+{% block content %}
+
     <h1>Turmas e Alunos</h1>
     
     {% if turmas %}
@@ -27,7 +28,5 @@
         <p>Não há turmas cadastradas.</p>
     {% endif %}
 
-    <a  href="/" class="btn btn-second">Voltar</a>
 
-</body>
-</html>
+{% endblock %}

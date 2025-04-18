@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style_inserir_notas.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <title>Inserir Notas</title>
-</head>
-<body>
+{% extends "model.html" %}
+
+{% block title %}
+    <title>SGA - Inserir notas</title>
+{% endblock %}
+
+{% block content %}
+
     <div class="second-column">
         <h2 class="title title-second">Inserir nota de Aluno</h2>
         <form class="form" method="post">
@@ -18,7 +15,6 @@
             </label>
             <button class="btn btn-second">Buscar Aluno</button>        
         </form>
-        <a  href="/" class="btn btn-second">Voltar</a>
     </div>
     </div>
     
@@ -40,8 +36,4 @@
         </form>
     {% endif %}
     
-    
-</body>
-</html>
-
-  
+{% endblock %}
