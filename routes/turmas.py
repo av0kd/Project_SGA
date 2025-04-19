@@ -1,0 +1,70 @@
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
+
+criar_turmas_bp = Blueprint('criar_turmas', __name__)
+turmas_criadas_bp = Blueprint('turmas_criadas', __name__)
+pesquisar_turmas_bp = Blueprint('pesquisar_turmas', __name__)
+turmas_pesquisadas_bp = Blueprint('turmas_pesquisadas', __name__)
+deletar_turmas_bp = Blueprint('deletar_turmas', __name__)
+turmas_deletadas_bp = Blueprint('turmas_deletadas', __name__)
+
+
+@criar_turmas_bp.route('/criar_turmas')
+def criar_turmas():
+    return render_template('criar_turmas.html')
+
+@turmas_criadas_bp.route('/turmas_criadas', methods =['POST'])
+def turmas_criadas():
+    nome_turma = request.form.get('nome_turma')
+
+    if not nome_turma:
+        return "Erro: Nome da turma é obrigatório", 400
+
+    nova_turma = Turma(nome=nome_turma)
+    db.session.add(nova_turma)
+    db.session.commit()
+
+    return render_template('turmas_criadas.html', turma=nova_turma)
+
+@pesquisar_turmas_bp.route('/pesquisar_turmas')
+def pesquisar_turmas():
+    return render_template('pesquisar_turmas.html')
+
+@turmas_pesquisadas_bp.route('/turmas_pesquisadas', methods=['POST'])
+def turmas_pesquisadas():
+    nome_turma = request.form.get('nome_turma', '').strip()  # Obtém o nome e remove espaços extras
+
+    if nome_turma:  
+        # Filtra as turmas pelo nome informado
+        turmas = Turma.query.filter(Turma.nome.ilike(f"%{nome_turma}%")).all()
+    else:
+        # Se não houver nome informado, retorna todas as turmas
+        turmas = Turma.query.all()
+
+    if not turmas:
+        flash("Nenhuma turma encontrada!", "warning")  # Mensagem de feedback para o usuário
+        return redirect(url_for('pagina_da_pesquisa'))  # Redireciona para a página de pesquisa
+
+    return render_template('turmas_pesquisadas.html', turmas=turmas)
+
+@deletar_turmas_bp.route('/deletar_turma', methods=['GET'])
+def deletar_turma():
+    return render_template('deletar_turma.html')
+
+@turmas_deletadas_bp.route('/turma_deletada', methods=['POST'])
+def turma_deletada():
+    if request.method == "POST":
+        turma_id = request.form.get("turma_id")
+
+        if not turma_id:
+            return "Erro: ID da turma é obrigatório", 400
+
+        turma = Turma.query.get(turma_id)
+
+        if not turma:
+            return "Turma não encontrada", 400
+
+        db.session.delete(turma)
+        db.session.commit()
+
+        return render_template('/turma_deletada.html')

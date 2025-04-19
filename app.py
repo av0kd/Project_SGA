@@ -1,175 +1,33 @@
 from flask import Flask, render_template, request, send_file, flash, redirect, url_for
 from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
 
+from routes import adicionar_alunos_bp, alunos_adicionados_bp, pesquisar_alunos_bp, aluno_pesquisado_bp, editar_alunos_bp, aluno_editado_bp, deletar_aluno_bp, aluno_deletado_bp
+from routes import criar_turmas_bp, turmas_criadas_bp, pesquisar_turmas_bp, turmas_pesquisadas_bp, deletar_turmas_bp, turmas_deletadas_bp
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///escola.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
+app.register_blueprint(adicionar_alunos_bp)
+app.register_blueprint(alunos_adicionados_bp)
+app.register_blueprint(pesquisar_alunos_bp)
+app.register_blueprint(aluno_pesquisado_bp)
+app.register_blueprint(editar_alunos_bp)
+app.register_blueprint(aluno_editado_bp)
+app.register_blueprint(deletar_aluno_bp)
+app.register_blueprint(aluno_deletado_bp)
+app.register_blueprint(criar_turmas_bp)
+app.register_blueprint(turmas_criadas_bp)
+app.register_blueprint(pesquisar_turmas_bp)
+app.register_blueprint(turmas_pesquisadas_bp)
+app.register_blueprint(deletar_turmas_bp)
+app.register_blueprint(turmas_deletadas_bp)
+
 @app.route('/')
 def inicio():
     return render_template('index.html')
 
-#Rotas para gerenciar a parte dos alunos
-@app.route('/adicionar_alunos')
-def adicionar_alunos():
-    return render_template('adicionar_alunos.html')
-
-@app.route('/alunos_adicionados', methods=["POST"])
-def alunos_adicionados():
-    nome = request.form.get('nome')
-    matricula = request.form.get('matricula')
-    turma_id = request.form.get('turma_id')
-
-    novo_aluno = Aluno(nome=nome, matricula=matricula, turma_id=turma_id)
-    db.session.add(novo_aluno)
-    db.session.commit()
-    return render_template('alunos_adicionados.html')
-
-@app.route('/pesquisar_alunos')
-def pesquisar_alunos():
-    return render_template('pesquisar_alunos.html')
-
-@app.route('/aluno_pesquisado', methods=['POST'])
-def aluno_pesquisado():
-    aluno_nome = request.form.get('nome_aluno')
-
-    if not aluno_nome:
-        return "Erro: nome do aluno é obrigatório", 400
-
-    # Consulta o nome do aluno, turma e matricula
-    resultado_query = db.session.query(Aluno.nome, Aluno.matricula, Turma.nome) \
-    .join(Turma, Aluno.turma_id == Turma.id) \
-    .filter(Aluno.nome == aluno_nome) \
-    .all() 
-
-    if not resultado_query:
-        return f"Nenhum aluno encontrado com o nome: {aluno_nome}"
-
-    return render_template('aluno_pesquisado.html', resultado_query=resultado_query)
-
-@app.route('/editar_aluno')
-def editar_aluno():
-    return render_template('editar_aluno.html')
-
-@app.route('/aluno_editado', methods = ["POST"])
-def aluno_editado():
-    matricula = request.form.get('matricula')
-    novo_nome = request.form.get('nome_aluno')
-    nova_turma_id = request.form.get('id_turma')
-
-    # Verificar se a matrícula foi fornecida
-    if not matricula:
-        return "Erro: a matrícula do aluno é obrigatória.", 400
-
-    aluno = Aluno.query.filter_by(matricula=matricula).first()
-
-    if not aluno:
-        return f"Aluno com matrícula '{matricula}' não encontrado.", 404
-
-    # Atualizar os dados do aluno se fornecidos
-    if novo_nome:
-        aluno.nome = novo_nome
-
-    if nova_turma_id:
-        aluno.turma_id = nova_turma_id
-
-    db.session.commit()
-    
-    return render_template('aluno_editado.html', aluno=aluno)
-
-@app.route('/deletar_aluno')
-def deletar_aluno():
-    return render_template('deletar_aluno.html')
-
-@app.route('/aluno_deletado', methods=["POST"])
-def aluno_deletado():
-    matricula_aluno = request.form.get('matricula_aluno')
-
-    if not matricula_aluno:
-        return "Erro: matrícula do aluno é obrigatória.", 400
-
-    aluno = Aluno.query.filter_by(matricula=matricula_aluno).first()
-
-    if not aluno:
-        return f"Nenhum aluno encontrado com a matrícula '{matricula_aluno}'.", 404
-
-    # Remover todas as notas associadas ao aluno
-    Nota.query.filter_by(aluno_id=aluno.id).delete()
-
-    # Remover registros da tabela intermediária AlunoDisciplina
-    AlunoDisciplina.query.filter_by(aluno_id=aluno.id).delete()
-
-    # Deletar o próprio aluno
-    db.session.delete(aluno)
-    db.session.commit()
-
-    return render_template('aluno_deletado.html', nome_aluno=aluno.nome, matricula_aluno=aluno.matricula)
-
-#<------------------AQUI ENCERRA A PARTE DO CRUD DOS ALUNOS------------------>
-
-#Rotas para gerenciar a parte das turmas
-@app.route('/criar_turmas')
-def criar_turmas():
-    return render_template('criar_turmas.html')
-
-@app.route('/turmas_criadas', methods=["POST"])
-def turmas_criadas():
-    nome_turma = request.form.get('nome_turma')
-
-    if not nome_turma:
-        return "Erro: Nome da turma é obrigatório", 400
-
-    nova_turma = Turma(nome=nome_turma)
-    db.session.add(nova_turma)
-    db.session.commit()
-
-    return render_template('turmas_criadas.html', turma=nova_turma)
-
-@app.route('/pesquisar_turmas')
-def pesquisar_turmas():
-    return render_template('pesquisar_turmas.html')
-
-@app.route('/turmas_pesquisadas', methods=["POST"])
-def turmas_pesquisadas():
-    nome_turma = request.form.get('nome_turma', '').strip()  # Obtém o nome e remove espaços extras
-
-    if nome_turma:  
-        # Filtra as turmas pelo nome informado
-        turmas = Turma.query.filter(Turma.nome.ilike(f"%{nome_turma}%")).all()
-    else:
-        # Se não houver nome informado, retorna todas as turmas
-        turmas = Turma.query.all()
-
-    if not turmas:
-        flash("Nenhuma turma encontrada!", "warning")  # Mensagem de feedback para o usuário
-        return redirect(url_for('pagina_da_pesquisa'))  # Redireciona para a página de pesquisa
-
-    return render_template('turmas_pesquisadas.html', turmas=turmas)
-
-@app.route('/deletar_turma', methods = ["GET"])
-def deletar_turma():
-    return render_template('deletar_turma.html')
-
-
-@app.route('/turma_deletada', methods=['POST'])
-def turma_deletada():
-    if request.method == "POST":
-        turma_id = request.form.get("turma_id")
-
-        if not turma_id:
-            return "Erro: ID da turma é obrigatório", 400
-
-        turma = Turma.query.get(turma_id)
-
-        if not turma:
-            return "Turma não encontrada", 400
-
-        db.session.delete(turma)
-        db.session.commit()
-
-        return render_template('/turma_deletada.html')
 
 #<------------------AQUI ENCERRA A PARTE DO CREATE E RECOVERY DAS TURMAS------------------>
 
