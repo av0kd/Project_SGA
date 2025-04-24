@@ -1,28 +1,13 @@
 from flask import Flask, render_template, request, send_file, flash, redirect, url_for
 from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
-
-from routes import adicionar_alunos_bp, alunos_adicionados_bp, pesquisar_alunos_bp, aluno_pesquisado_bp, editar_alunos_bp, aluno_editado_bp, deletar_aluno_bp, aluno_deletado_bp
-from routes import criar_turmas_bp, turmas_criadas_bp, pesquisar_turmas_bp, turmas_pesquisadas_bp, deletar_turmas_bp, turmas_deletadas_bp
+from blueprints import register_blueprints
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///escola.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
-app.register_blueprint(adicionar_alunos_bp)
-app.register_blueprint(alunos_adicionados_bp)
-app.register_blueprint(pesquisar_alunos_bp)
-app.register_blueprint(aluno_pesquisado_bp)
-app.register_blueprint(editar_alunos_bp)
-app.register_blueprint(aluno_editado_bp)
-app.register_blueprint(deletar_aluno_bp)
-app.register_blueprint(aluno_deletado_bp)
-app.register_blueprint(criar_turmas_bp)
-app.register_blueprint(turmas_criadas_bp)
-app.register_blueprint(pesquisar_turmas_bp)
-app.register_blueprint(turmas_pesquisadas_bp)
-app.register_blueprint(deletar_turmas_bp)
-app.register_blueprint(turmas_deletadas_bp)
+register_blueprints(app)
 
 @app.route('/')
 def inicio():
@@ -32,44 +17,6 @@ def inicio():
 #<------------------AQUI ENCERRA A PARTE DO CREATE E RECOVERY DAS TURMAS------------------>
 
 #Rotas para disciplinas
-@app.route('/cadastrar_disciplinas')
-def cadastrar_disciplinas():
-    return render_template('cadastrar_disciplinas.html')
-
-@app.route('/disciplina_cadastrada', methods = ["POST"])
-def disciplina_cadastrada():
-    nome_disciplina = request.form.get('nome_disciplina')
-
-    nova_disciplina = Disciplina(nome=nome_disciplina)
-    db.session.add(nova_disciplina)
-    db.session.commit()
-    return render_template('disciplina_cadastrada.html', disciplina = nova_disciplina)
-
-@app.route('/consultar_disciplina')
-def consultar_disciplina():
-    return render_template('consultar_disciplina.html')
-
-@app.route('/disciplina_consultada', methods = ["POST"])
-def disciplina_consultada():
-    nome_disciplina = request.form.get('nome_disciplina')
-
-    if not nome_disciplina:
-        disciplinas = Disciplina.query.all()
-
-        if not disciplinas:
-            return "Nenhuma disciplina cadastrada.", 404
-
-        return render_template('disciplina_consultada.html', disciplinas=disciplinas, mostrar_todas=True)
-    # Consulta da disciplina pelo nome
-    disciplina = Disciplina.query.filter_by(nome=nome_disciplina).first()
-
-    if not disciplina:
-        return f"Disciplina '{nome_disciplina}' não encontrada.", 404
-
-    # Consulta de alunos vinculados à disciplina
-    alunos = Aluno.query.join(AlunoDisciplina).filter(AlunoDisciplina.disciplina_id == disciplina.id).all()
-
-    return render_template('disciplina_consultada.html', disciplina=disciplina, alunos=alunos, disciplina_id=disciplina.id)
 
 @app.route('/vincular_disciplina', methods=['POST', 'GET'])
 def vincular_disciplina():

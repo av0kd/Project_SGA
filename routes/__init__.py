@@ -3,3 +3,6 @@ from .alunos import aluno_pesquisado_bp, editar_alunos_bp, aluno_editado_bp, del
 
 from .turmas import criar_turmas_bp, turmas_criadas_bp, pesquisar_turmas_bp, turmas_pesquisadas_bp
 from .turmas import deletar_turmas_bp, turmas_deletadas_bp
+
+from .disciplina import cadastrar_disciplinas_bp, disciplina_cadastrada_bp, consultar_disciplina_bp
+from .disciplina import disciplina_consultada_bp

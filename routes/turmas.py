@@ -8,7 +8,6 @@ turmas_pesquisadas_bp = Blueprint('turmas_pesquisadas', __name__)
 deletar_turmas_bp = Blueprint('deletar_turmas', __name__)
 turmas_deletadas_bp = Blueprint('turmas_deletadas', __name__)
 
-
 @criar_turmas_bp.route('/criar_turmas')
 def criar_turmas():
     return render_template('criar_turmas.html')
