@@ -6,3 +6,9 @@ from .turmas import deletar_turmas_bp, turmas_deletadas_bp
 
 from .disciplina import cadastrar_disciplinas_bp, disciplina_cadastrada_bp, consultar_disciplina_bp
 from .disciplina import disciplina_consultada_bp
+
+from .vincular import vincular_disciplina_bp, disciplina_vinculada_bp
+
+from .inserir_notas import inserir_notas_bp
+
+from .gerar_notas import gerar_relatorio_bp
