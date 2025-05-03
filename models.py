@@ -2,6 +2,12 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+class Usuario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    matricula_user = db.Column(db.String(40), unique=True, nullable=False)
+    senha_user = db.Column(db.String(128), nullable=False)
+    cargo = db.Column(db.String(40), nullable=False)
+
 # Tabela de Turmas
 class Turma(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,7 +31,7 @@ class Aluno(db.Model):
 # Tabela de Disciplinas
 class Disciplina(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(100), nullable=False)
+    nome = db.Column(db.String(100), unique=True, nullable=False)
     notas = db.relationship('Nota', backref='disciplina', lazy=True)  # Relacionamento com Nota
 
     def __repr__(self):

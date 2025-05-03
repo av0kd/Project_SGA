@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, send_file
-from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
+from flask import Flask, render_template
+from models import db
 from blueprints import register_blueprints
 
 app = Flask(__name__)

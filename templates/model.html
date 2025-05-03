@@ -27,6 +27,7 @@
                       <a href="/deletar_aluno">Deletar aluno</a>
                       <a href="/editar_aluno">Editar aluno</a>
                       <a href="/pesquisar_alunos">Pesquisar aluno</a>
+                      <a href="/inserir_notas">Inserir notas</a>
                     </div>
                 </div> 
                 
@@ -44,7 +45,7 @@
                     <button onclick="myFunction(this)" class="dropbtn">DISCIPLINAS</button>
                     <div id="myDropdown" class="dropdown-content">
                     <a href="/cadastrar_disciplinas">Cadastrar disciplinas</a>
-                    <!--<a href="/editar_disciplina">Editar Disciplina</a>-->
+                    <a href="/vincular_disciplina">Vincular Disciplina</a>
                     <!--<a href="/deletar_disciplina">Deletar Disciplina</a>-->
                     <a href="/consultar_disciplina">Pesquisar disciplina</a>
                     </div>
@@ -77,8 +78,10 @@
             </div>
         </aside>
         <main class="main-content">
+            <div class="second-column">
             {% block content %}
             {% endblock %}
+            </div>
         </main>
     </div>
 </body>

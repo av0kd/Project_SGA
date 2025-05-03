@@ -6,15 +6,12 @@
 
 {% block content %}
 
-    <div class="second-column">
-        <h2 class="title title-second">Gerar Relatório de Notas</h2>
-        <form class="form" method="post">
-            <label class="label-input" for="nome_aluno">
-                <i class="far fa-user icon-modify"></i>
-                <input type="text" placeholder="Numero da Matricula:" name="matricula_aluno" required>
-            </label>  
-            <button class="btn btn-second" type="submit">Gerar Relatório</button>        
-        </form>
-    </div>
-
+    <h2>Gerar Relatório de Notas</h2>
+    <form class="form" method="post">
+        <label class="label-input" for="nome_aluno">
+            <i class="far fa-user icon-modify"></i>
+            <input type="text" placeholder="Numero da Matricula:" name="matricula_aluno" required>
+        </label>  
+        <button class="btn btn-second" type="submit">Gerar Relatório</button>        
+    </form>
 {% endblock %}

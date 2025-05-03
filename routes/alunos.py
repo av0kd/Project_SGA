@@ -35,17 +35,21 @@ def pesquisar_alunos():
 def aluno_pesquisado():
     aluno_nome = request.form.get('nome_aluno')
 
+    # Se o nome do aluno não for fornecido, mostrar todos os alunos
     if not aluno_nome:
-        return "Erro: nome do aluno é obrigatório", 400
+        resultado_query = db.session.query(Aluno.nome, Aluno.matricula, Turma.nome) \
+            .outerjoin(Turma, Aluno.turma_id == Turma.id) \
+            .all()
+    else:
+        # Caso o nome do aluno seja fornecido, filtra pelo nome
+        resultado_query = db.session.query(Aluno.nome, Aluno.matricula, Turma.nome) \
+            .outerjoin(Turma, Aluno.turma_id == Turma.id) \
+            .filter(Aluno.nome == aluno_nome) \
+            .all()
 
-    # Consulta o nome do aluno, turma e matricula
-    resultado_query = db.session.query(Aluno.nome, Aluno.matricula, Turma.nome) \
-    .join(Turma, Aluno.turma_id == Turma.id) \
-    .filter(Aluno.nome == aluno_nome) \
-    .all() 
-
+    # Verifica se a consulta retornou algum aluno
     if not resultado_query:
-        return f"Nenhum aluno encontrado com o nome: {aluno_nome}"
+        return f"Nenhum aluno encontrado com o nome: {aluno_nome}" if aluno_nome else "Nenhum aluno encontrado"
 
     return render_template('aluno_pesquisado.html', resultado_query=resultado_query)
 
@@ -61,7 +65,7 @@ def aluno_editado():
 
     # Verificar se a matrícula foi fornecida
     if not matricula:
-        return "Erro: a matrícula do aluno é obrigatória.", 400
+        return render_template("404.html")
 
     aluno = Aluno.query.filter_by(matricula=matricula).first()
 

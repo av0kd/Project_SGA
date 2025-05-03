@@ -5,27 +5,25 @@
 {% endblock %}
 
 {% block content %}
-    <div class="second-column">
-        <h2 class="title title-second">Adicionar Alunos</h2>
-        <p class="description description-second">Insira as informações para registrar:</p>
+    <h2>Adicionar Alunos</h2>
+    <p class="description description-second">Insira as informações para registrar:</p>
 
-        <form class="form" action="/alunos_adicionados" method="post">
-            <label class="label-input">
-                <i class="far fa-user icon-modify"></i>
-                <input type="text" placeholder="Nome" name="nome" required>
-            </label>
+    <form class="form" action="/alunos_adicionados" method="post">
+        <label class="label-input">
+            <i class="far fa-user icon-modify"></i>
+            <input type="text" placeholder="Nome" name="nome" required>
+        </label>
 
-            <label class="label-input">
-                <i class="far fa-id-badge icon-modify"></i>
-                <input type="text" placeholder="Matrícula" name="matricula" required>
-            </label>
+        <label class="label-input">
+            <i class="far fa-id-badge icon-modify"></i>
+            <input type="text" placeholder="Matrícula" name="matricula" required>
+        </label>
 
-            <label class="label-input">
-                <i class="fas fa-users icon-modify"></i>
-                <input type="text" placeholder="ID da Turma" name="turma_id" required>
-            </label>
+        <label class="label-input">
+            <i class="fas fa-users icon-modify"></i>
+            <input type="text" placeholder="ID da Turma" name="turma_id">
+        </label>
 
-            <button class="btn btn-second" type="submit">Registrar</button>        
-        </form>
-    </div>
+        <button class="btn btn-second" type="submit">Registrar</button>        
+    </form>
 {% endblock %}

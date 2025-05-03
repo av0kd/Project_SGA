@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request
 from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
 
 criar_turmas_bp = Blueprint('criar_turmas', __name__)
@@ -17,7 +17,7 @@ def turmas_criadas():
     nome_turma = request.form.get('nome_turma')
 
     if not nome_turma:
-        return "Erro: Nome da turma é obrigatório", 400
+        return render_template('400.html')
 
     nova_turma = Turma(nome=nome_turma)
     db.session.add(nova_turma)
@@ -41,8 +41,7 @@ def turmas_pesquisadas():
         turmas = Turma.query.all()
 
     if not turmas:
-        flash("Nenhuma turma encontrada!", "warning")  # Mensagem de feedback para o usuário
-        return redirect(url_for('pagina_da_pesquisa'))  # Redireciona para a página de pesquisa
+        return render_template('400.html')
 
     return render_template('turmas_pesquisadas.html', turmas=turmas)
 
@@ -56,12 +55,12 @@ def turma_deletada():
         turma_id = request.form.get("turma_id")
 
         if not turma_id:
-            return "Erro: ID da turma é obrigatório", 400
+            return render_template('400.html')
 
         turma = Turma.query.get(turma_id)
 
         if not turma:
-            return "Turma não encontrada", 400
+            return render_template('400.html')
 
         db.session.delete(turma)
         db.session.commit()

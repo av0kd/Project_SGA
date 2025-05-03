@@ -6,26 +6,24 @@
 
 {% block content %}
 
-    <div class="second-column">
-        <h2 class="title title-second">Editar Informações do Aluno</h2>
-        <p class="description description-second">Insira a matricula para encontrar o aluno:</p>
-        <p class="description description-second">Insira o novo nome:</p>
-        <p class="description description-second">Insira o novo ID de turma para alterar a turma:</p>
-        <form class="form" action="/aluno_editado" method="post">
-            <label class="label-input" for="">
-                <i class="far fa-user icon-modify"></i>
-                <input type="text" placeholder="Informe a Matricula" name="matricula" required>
-            </label>
-            <label class="label-input" for="">
-                <i class="far fa-user icon-modify"></i>
-                <input type="text" placeholder="Informe o Nome (opcional)" name="nome_aluno">
-            </label>
-            <label class="label-input" for="">
-                <i class="far fa-user icon-modify"></i>
-                <input type="text" placeholder="Informe o ID da turma (opcional)" name="id_turma">
-            </label>
-            <button class="btn btn-second">Editar</button> 
-        </form>
-    </div>
+    <h2>Editar Informações do Aluno</h2>
+    <p class="description description-second">Insira a matricula para encontrar o aluno:</p>
+    <p class="description description-second">Insira o novo nome:</p>
+    <p class="description description-second">Insira o novo ID de turma para alterar a turma:</p>
+    <form class="form" action="/aluno_editado" method="post">
+        <label class="label-input" for="">
+            <i class="far fa-user icon-modify"></i>
+            <input type="text" placeholder="Informe a Matricula" name="matricula" required>
+        </label>
+        <label class="label-input" for="">
+            <i class="far fa-user icon-modify"></i>
+            <input type="text" placeholder="Informe o Nome (opcional)" name="nome_aluno">
+        </label>
+        <label class="label-input" for="">
+            <i class="far fa-user icon-modify"></i>
+            <input type="text" placeholder="Informe o ID da turma (opcional)" name="id_turma">
+        </label>
+        <button class="btn btn-second">Editar</button> 
+    </form>
 
 {% endblock %}

@@ -18,9 +18,9 @@ def disciplina_vinculada():
     disciplina = Disciplina.query.get(disciplina_id)
 
     if not aluno:
-        return "Aluno não encontrado", 400
+        return render_template("/400.html")
     if not disciplina:
-        return "Disciplina não encontrada", 400
+        return render_template("/400.html")
 
     # Verifica se o aluno já está vinculado à disciplina
     if AlunoDisciplina.query.filter_by(aluno_id=aluno.id, disciplina_id=disciplina.id).first():

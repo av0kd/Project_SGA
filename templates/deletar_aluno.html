@@ -5,15 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <div class="second-column">
-        <h2 class="title title-second">Insira a matricula do aluno para excluir</h2>
-        <p class="description description-second">Insira a matricula:</p>
-        <form class="form" action="/aluno_deletado" method="post">
-            <label class="label-input" for="">
-                <i class="far fa-user icon-modify"></i>
-                <input type="text" placeholder="Ex: 2020" name="matricula_aluno">
-            </label>
-            <button class="btn btn-second">Excluir</button>    
-        </form>
-    </div>
+    <h2>Insira a matricula do aluno para excluir</h2>
+    <p class="description description-second">Insira a matricula:</p>
+    <form class="form" action="/aluno_deletado" method="post">
+        <label class="label-input" for="">
+            <i class="far fa-user icon-modify"></i>
+            <input type="text" placeholder="Ex: 2020" name="matricula_aluno">
+        </label>
+        <button class="btn btn-second">Excluir</button>    
+    </form>
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, send_file
 from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
 
 gerar_relatorio_bp = Blueprint('gerar_relatorio', __name__)

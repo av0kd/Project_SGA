@@ -7,21 +7,18 @@
 
 {% block content %}
 
-    <div class="second-column">
-        <h2 class="title title-second">Vincular Aluno a Disciplina</h2>
-        <form class="form" action="/disciplina_vinculada" method="post">
-            <label class="label-input" for="matricula_aluno">
-                <i class="far fa-user icon-modify"></i>
-                <input type="text" placeholder="Matricula do Aluno:" name="matricula_aluno" required>
-            </label>
-            <label class="label-input" for="disciplina_id">
-                <i class="far fa-user icon-modify"></i> 
-                <input type="text" placeholder="ID da Disciplina:" name="disciplina_id" required>
-            </label>
-            <button class="btn btn-second">Vincular</button>  
-        </form>
-
-    </div>
+    <h2>Vincular Aluno a Disciplina</h2>
+    <form class="form" action="/disciplina_vinculada" method="post">
+        <label class="label-input" for="matricula_aluno">
+            <i class="far fa-user icon-modify"></i>
+            <input type="text" placeholder="Matricula do Aluno:" name="matricula_aluno" required>
+        </label>
+        <label class="label-input" for="disciplina_id">
+            <i class="far fa-user icon-modify"></i> 
+            <input type="text" placeholder="ID da Disciplina:" name="disciplina_id" required>
+        </label>
+        <button class="btn btn-second">Vincular</button>  
+    </form>
 
 {% endblock %}
  

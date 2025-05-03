@@ -5,12 +5,25 @@
 {% endblock %}
 
 {% block content %}
+    <h2>Alunos pesquisados</h2>
 
+    <table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Matrícula</th>
+            <th>Turma</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for nome_aluno, matricula_aluno, nome_turma in resultado_query %}
-        <p>Nome: {{ nome_aluno }}</p>
-        <p>Matrícula: {{ matricula_aluno }}</p>
-        <p>Turma: {{ nome_turma }}</p>
-        <hr>
+        <tr>
+            <td>{{ nome_aluno }}</td>
+            <td>{{ matricula_aluno }}</td>
+            <td>{{ nome_turma }}</td>
+        </tr>
     {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

@@ -6,34 +6,42 @@
 
 {% block content %}
 
-    <div class="second-column">
-        <h2 class="title title-second">Inserir nota de Aluno</h2>
-        <form class="form" method="post">
-            <label class="label-input" for="matricula_aluno">
-                <i class="far fa-user icon-modify"></i>
-                <input type="text" placeholder="Matricula do aluno:" name="matricula_aluno">
-            </label>
-            <button class="btn btn-second">Buscar Aluno</button>        
-        </form>
-    </div>
-    </div>
+    <h2>Inserir nota de Aluno</h2>
+    <form class="form" method="post">
+        <label class="label-input" for="matricula_aluno">
+            <i class="far fa-user icon-modify"></i>
+            <input type="text" placeholder="Matricula do aluno:" name="matricula_aluno">
+        </label>
+        <button class="btn btn-second">Buscar Aluno</button>        
+    </form>
     
     
-    {% if aluno %}
-        <h2>Disciplinas do Aluno: {{ aluno.nome }}</h2>
-        
-        <form method="POST">
-            <input type="hidden" name="matricula_aluno" value="{{ aluno.matricula }}">
-            
-            {% for aluno_disciplina in aluno.disciplinas %}
-            <label for="nota_{{ aluno_disciplina.disciplina.id }}">{{ aluno_disciplina.disciplina.nome }}:</label>
-            <input type="number" name="nota_{{ aluno_disciplina.disciplina.id }}" step="0.1" min="0" max="10" required>
+{% if aluno %}
+    <h2>Notas para o Aluno: {{ aluno.nome }}</h2>
+
+    <form method="POST">
+        <input type="hidden" name="matricula_aluno" value="{{ aluno.matricula }}">
+
+        {% for disciplina in disciplinas %}
+            <label for="nota_{{ disciplina.disciplina.id }}">{{ disciplina.disciplina.nome }}:</label>
+
+            {% set nota_existente = None %}
+            {% for nota in aluno.notas %}
+                {% if nota.disciplina_id == disciplina.disciplina.id %}
+                    {% set nota_existente = nota %}
+                {% endif %}
+            {% endfor %}
+
+            <input type="number" name="nota_{{ disciplina.disciplina.id }}"
+                   value="{{ nota_existente.valor if nota_existente else '' }}"
+                   step="0.1" min="0" max="10" required>
             <br>
         {% endfor %}
-        
-    
-            <button type="submit">Salvar Notas</button>
-        </form>
-    {% endif %}
+
+        <button type="submit">Salvar Notas</button>
+    </form>
+{% endif %}
+
+
     
 {% endblock %}

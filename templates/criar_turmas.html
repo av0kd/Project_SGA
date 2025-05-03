@@ -6,16 +6,13 @@
 
 {% block content %}
 
-    <div class="second-column">
-        <h2 class="title title-second">Criar novas turmas</h2>
-        <p class="description description-second">Insira as informações para criar a turma:</p>
-        <form class="form" action="/turmas_criadas" method="POST">
-            <label class="label-input" for="">
-                <i class="far fa-user icon-modify"></i>
-                <input type="text" id="nome_turma" name="nome_turma" placeholder="Ex: Turma A" required>
-            </label>
-            <button class="btn btn-second">Criar turma</button>        
-        </form>
-    </div>
-
+    <h2>Criar novas turmas</h2>
+    <p class="description description-second">Insira as informações para criar a turma:</p>
+    <form class="form" action="/turmas_criadas" method="POST">
+        <label class="label-input" for="">
+            <i class="far fa-user icon-modify"></i>
+            <input type="text" id="nome_turma" name="nome_turma" placeholder="Ex: Turma A" required>
+        </label>
+        <button class="btn btn-second">Criar turma</button>        
+    </form>
 {% endblock %}
