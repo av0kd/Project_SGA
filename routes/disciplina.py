@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request
+from flask_login import login_required
 from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
 
 cadastrar_disciplinas_bp = Blueprint('cadastrar_disciplinas', __name__)
@@ -7,10 +8,12 @@ consultar_disciplina_bp = Blueprint('consultar_disciplina', __name__)
 disciplina_consultada_bp = Blueprint('disciplina_consultada', __name__)
 
 @cadastrar_disciplinas_bp.route('/cadastrar_disciplinas')
+@login_required
 def cadastrar_disciplinas():
     return render_template('cadastrar_disciplinas.html')
 
 @disciplina_cadastrada_bp.route('/disciplina_cadastrada', methods=['POST'])
+@login_required
 def disciplina_cadastrada():
     nome_disciplina = request.form.get('nome_disciplina')
 
@@ -20,10 +23,12 @@ def disciplina_cadastrada():
     return render_template('disciplina_cadastrada.html', disciplina = nova_disciplina)
 
 @consultar_disciplina_bp.route('/consultar_disciplina')
+@login_required
 def consultar_disciplina():
     return render_template('consultar_disciplina.html')
 
 @disciplina_consultada_bp.route('/disciplina_consultada', methods=['POST'])
+@login_required
 def disciplina_consultada():
     nome_disciplina = request.form.get('nome_disciplina')
 

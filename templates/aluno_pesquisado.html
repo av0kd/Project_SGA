@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-    {% for nome_aluno, matricula_aluno, nome_turma in resultado_query %}
+    {% for nome_aluno, matricula_aluno, nome_turma in alunos %}
         <tr>
             <td>{{ nome_aluno }}</td>
             <td>{{ matricula_aluno }}</td>
@@ -24,6 +24,6 @@
         </tr>
     {% endfor %}
     </tbody>
-</table>
+    </table>
 
 {% endblock %}

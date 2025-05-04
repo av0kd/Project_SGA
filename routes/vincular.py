@@ -1,14 +1,17 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required
 from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
 
 vincular_disciplina_bp = Blueprint('vincular_disciplina', __name__)
 disciplina_vinculada_bp = Blueprint('disciplina_vinculada', __name__)
 
 @vincular_disciplina_bp.route('/vincular_disciplina', methods=['GET', 'POST'])
+@login_required
 def vincular_disciplina():
     return render_template('vincular_disciplina.html')
 
 @disciplina_vinculada_bp.route('/disciplina_vinculada', methods=['POST'])
+@login_required
 def disciplina_vinculada():
     matricula_aluno = request.form.get('matricula_aluno')
     disciplina_id = request.form.get('disciplina_id')

@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request
+from flask_login import login_required
 from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
 
 criar_turmas_bp = Blueprint('criar_turmas', __name__)
@@ -9,10 +10,12 @@ deletar_turmas_bp = Blueprint('deletar_turmas', __name__)
 turmas_deletadas_bp = Blueprint('turmas_deletadas', __name__)
 
 @criar_turmas_bp.route('/criar_turmas')
+@login_required
 def criar_turmas():
     return render_template('criar_turmas.html')
 
 @turmas_criadas_bp.route('/turmas_criadas', methods =['POST'])
+@login_required
 def turmas_criadas():
     nome_turma = request.form.get('nome_turma')
 
@@ -26,10 +29,13 @@ def turmas_criadas():
     return render_template('turmas_criadas.html', turma=nova_turma)
 
 @pesquisar_turmas_bp.route('/pesquisar_turmas')
+@login_required
 def pesquisar_turmas():
     return render_template('pesquisar_turmas.html')
 
+#''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 @turmas_pesquisadas_bp.route('/turmas_pesquisadas', methods=['POST'])
+@login_required
 def turmas_pesquisadas():
     nome_turma = request.form.get('nome_turma', '').strip()  # Obtém o nome e remove espaços extras
 
@@ -45,11 +51,14 @@ def turmas_pesquisadas():
 
     return render_template('turmas_pesquisadas.html', turmas=turmas)
 
+#''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 @deletar_turmas_bp.route('/deletar_turma', methods=['GET'])
+@login_required
 def deletar_turma():
     return render_template('deletar_turma.html')
 
 @turmas_deletadas_bp.route('/turma_deletada', methods=['POST'])
+@login_required
 def turma_deletada():
     if request.method == "POST":
         turma_id = request.form.get("turma_id")

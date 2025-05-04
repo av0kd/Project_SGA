@@ -1,9 +1,11 @@
 from flask import Blueprint, render_template, request, send_file
+from flask_login import login_required
 from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
 
 gerar_relatorio_bp = Blueprint('gerar_relatorio', __name__)
 
 @gerar_relatorio_bp.route('/gerar_relatorio', methods=['GET', 'POST'])
+@login_required
 def gerar_relatorio():
     if request.method == 'POST':
         matricula_aluno = request.form.get('matricula_aluno')

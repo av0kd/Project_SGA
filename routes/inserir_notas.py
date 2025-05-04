@@ -1,10 +1,12 @@
 from flask import Blueprint, render_template, request
 from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
+from flask_login import login_required
 from sqlalchemy.orm import joinedload
 
 inserir_notas_bp = Blueprint('inserir_notas', __name__)
 
 @inserir_notas_bp.route('/inserir_notas', methods=['GET','POST'])
+@login_required
 def inserir_notas():
     if request.method == 'POST':
         matricula_aluno = request.form.get('matricula_aluno')

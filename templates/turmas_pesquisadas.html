@@ -6,24 +6,23 @@
 
 {% block content %}
 
-    <h2>Turmas e Alunos</h2>
+    <h2>Turmas</h2>
     
     {% if turmas %}
-        <ul>
             {% for turma in turmas %}
-                <li>
-                    <h2>Turma: {{ turma.nome }}</h2>
-                    <p>Alunos:</p>
-                    <ul>
-                        {% for aluno in turma.alunos %}
-                            <li>{{ aluno.nome }}.</li>
-                        {% else %}
-                            <li>Sem alunos cadastrados nesta turma.</li>
-                        {% endfor %}
-                    </ul>
-                </li>
+                <table>
+                <thead>
+                    <th>{{ turma.nome }}</th>
+                </thead>
+                <tbody>
+                    {% for nome_aluno in turma.alunos %}
+                        <tr><td>{{ nome_aluno.nome }}</td></tr>
+                    {% else %}
+                        <td>Sem alunos cadastrados nesta turma.</td>
+                    {% endfor %}
+                </tbody>
+                </table>
             {% endfor %}
-        </ul>
     {% else %}
         <p>Não há turmas cadastradas.</p>
     {% endif %}

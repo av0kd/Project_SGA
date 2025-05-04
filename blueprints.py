@@ -5,7 +5,7 @@ from routes import (
     turmas_pesquisadas_bp, deletar_turmas_bp, turmas_deletadas_bp,
     cadastrar_disciplinas_bp, disciplina_cadastrada_bp, consultar_disciplina_bp,
     disciplina_consultada_bp, vincular_disciplina_bp, disciplina_vinculada_bp,
-    inserir_notas_bp, gerar_relatorio_bp
+    inserir_notas_bp, gerar_relatorio_bp, register_user_bp, index_bp, logout_user_bp
 )
 
 def register_blueprints(app):
@@ -37,5 +37,9 @@ def register_blueprints(app):
         gerar_relatorio_bp
     ]
 
-    for bp in alunos + turmas + disciplinas + vincular + inserir_notas + gerar_relatorio:
+    login_register = [ 
+        register_user_bp, index_bp, logout_user_bp
+    ]
+
+    for bp in alunos + turmas + disciplinas + vincular + inserir_notas + gerar_relatorio + login_register:
         app.register_blueprint(bp)
