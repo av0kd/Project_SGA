@@ -5,31 +5,49 @@
 {% endblock %}
 
 {% block content %}
-    <title></title>
-
-
-    <h2>Consulta de Disciplinas</h2">
-
+<table>
     {% if mostrar_todas %}
-        <h2>Todas as Disciplinas:</h2>
-        <ul>
-            {% for disciplina in disciplinas %}
-                <li>{{ disciplina.nome }} (ID: {{ disciplina.id }})</li>
-            {% endfor %}
-        </ul>
+    <h2>Disciplinas consultadas</h2">
+    
+    <thead>
+        <tr>
+            <th>Disciplina</th>
+            <th>ID</th>
+        </tr>
+    </thead>
+        {% for disciplina in disciplinas %}
+        <tbody>
+            <tr>
+                <td>{{ disciplina.nome }}</td>
+                <td>{{ disciplina.id }}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    
     {% else %}
-        <h2>Disciplina: {{ disciplina.nome }} (ID: {{ disciplina_id }})</h2>
-
-        <h3>Alunos Matriculados:</h3>
+    <h2>Disciplina "{{disciplina.nome}}" consultada</h2">
+    <thead>
+        <tr>
+            <th>Discentes</th>
+            <th>Matriculas</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    
         {% if alunos %}
-            <ul>
-                {% for aluno in alunos %}
-                    <li>{{ aluno.nome }} (Matrícula: {{ aluno.matricula }})</li>
+            {% for aluno in alunos %}
+            <tr>
+                <td>{{ aluno.nome }}</td>
+                <td>{{ aluno.matricula }}</td>
+            </tr>
                 {% endfor %}
-            </ul>
+            
         {% else %}
             <p>Não há alunos vinculados a esta disciplina.</p>
         {% endif %}
-    {% endif %}
+    </tbody>
     
+    {% endif %}
+</table>
 {% endblock %}

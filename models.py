@@ -12,51 +12,66 @@ class Usuario(UserMixin, db.Model):
     def get_id(self):
         return str(self.id)
 
-# Tabela de Turmas
+turma_disciplina = db.Table('turma_disciplina',
+    db.Column('turma_id', db.Integer, db.ForeignKey('turma.id'), primary_key=True),
+    db.Column('disciplina_id', db.Integer, db.ForeignKey('disciplina.id'), primary_key=True)
+)
+
 class Turma(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(50), nullable=False)
-    alunos = db.relationship('Aluno', backref='turma', lazy=True)  
+    serie = db.Column(db.String(50), nullable=False)  # Ex: '6° ano'
+    
+    alunos = db.relationship('Aluno', backref='turma', lazy=True)
+    disciplinas = db.relationship('Disciplina', secondary=turma_disciplina, backref='turmas', lazy='subquery')
 
     def __repr__(self):
-        return f'<Turma {self.nome}>'
+        return f'<Turma {self.nome} - {self.serie}>'
 
-# Tabela de Alunos
 class Aluno(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
     matricula = db.Column(db.String(20), unique=True, nullable=False)
-    turma_id = db.Column(db.Integer, db.ForeignKey('turma.id'), nullable=False)  
-    notas = db.relationship('Nota', backref='aluno', lazy=True) 
+    turma_id = db.Column(db.Integer, db.ForeignKey('turma.id'), nullable=False)
+    serie = db.Column(db.String(50), nullable=True)
+
+    notas = db.relationship('Nota', backref='aluno', lazy=True)
+    disciplinas = db.relationship('Disciplina', secondary='aluno_disciplina', back_populates='alunos')
+
+    def __init__(self, nome, matricula, turma_id):
+        self.nome = nome
+        self.matricula = matricula
+        self.turma_id = turma_id
+
+        turma = Turma.query.get(turma_id)
+        if turma:
+            self.serie = turma.serie
+            
+            for disciplina in turma.disciplinas:
+                self.disciplinas.append(disciplina)
 
     def __repr__(self):
-        return f'<Aluno {self.nome}>'
+        return f'<Aluno {self.nome} - {self.serie}>'
 
-# Tabela de Disciplinas
 class Disciplina(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), unique=True, nullable=False)
-    notas = db.relationship('Nota', backref='disciplina', lazy=True) 
+
+    notas = db.relationship('Nota', backref='disciplina', lazy=True)
+    alunos = db.relationship('Aluno', secondary='aluno_disciplina', back_populates='disciplinas')
 
     def __repr__(self):
         return f'<Disciplina {self.nome}>'
 
-
 class AlunoDisciplina(db.Model):
     aluno_id = db.Column(db.Integer, db.ForeignKey('aluno.id'), primary_key=True)
     disciplina_id = db.Column(db.Integer, db.ForeignKey('disciplina.id'), primary_key=True)
-    aluno = db.relationship('Aluno', backref=db.backref('disciplinas', lazy=True))
-    disciplina = db.relationship('Disciplina', backref=db.backref('alunos', lazy=True))
 
-    def __repr__(self):
-        return f'<AlunoDisciplina {self.aluno.nome} - {self.disciplina.nome}>'
-
-# Tabela de Notas
 class Nota(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     valor = db.Column(db.Float, nullable=False)
-    aluno_id = db.Column(db.Integer, db.ForeignKey('aluno.id'), nullable=False) 
-    disciplina_id = db.Column(db.Integer, db.ForeignKey('disciplina.id'), nullable=False)  
+    aluno_id = db.Column(db.Integer, db.ForeignKey('aluno.id'), nullable=False)
+    disciplina_id = db.Column(db.Integer, db.ForeignKey('disciplina.id'), nullable=False)
 
     def __repr__(self):
         return f'<Nota {self.valor}>'

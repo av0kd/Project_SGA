@@ -18,4 +18,4 @@ def register_user():
         db.session.add(novo_user)
         db.session.commit()
 
-        return redirect(url_for('/'))
+        return redirect(url_for('index.index'))

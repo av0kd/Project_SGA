@@ -32,7 +32,7 @@ def login():
         user = Usuario.query.filter_by(matricula_user=matricula_user, senha_user=senha_user).first()
 
         if not user:
-            return 'Nome ou senha incorretos'
+            return f'Matricula ou senha incorretos!!'
 
         login_user(user)
         return redirect(url_for('index.index'))

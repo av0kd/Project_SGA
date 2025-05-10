@@ -1,0 +1,10 @@
+SGA BOLETIM
+
+Nome do Aluno: Sicrano
+Turma: Turma A
+
+Disciplina	Nota
+Matemática	5.0
+Português	8.0
+
+Média Final: 6.50

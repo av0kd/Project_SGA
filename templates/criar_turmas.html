@@ -1,18 +1,36 @@
 {% extends "model.html" %}
 
 {% block title %}
-    <title>SGA - Criar turmas</title>
+    <title>SGA - Criar Turmas</title>
 {% endblock %}
 
 {% block content %}
 
-    <h2>Criar novas turmas</h2>
+    <h2>Criar Nova Turma</h2>
     <p class="description description-second">Insira as informações para criar a turma:</p>
-    <form class="form" action="/turmas_criadas" method="POST">
-        <label class="label-input" for="">
+    
+        <form class="form" method="POST" action="{{ url_for('turmas_criadas.turmas_criadas') }}">
+        <label class="label-input" for="nome_turma">
             <i class="far fa-user icon-modify"></i>
-            <input type="text" id="nome_turma" name="nome_turma" placeholder="Ex: Turma A" required>
+            <input type="text" name="nome_turma" placeholder="Nome da Turma" required>
         </label>
-        <button class="btn btn-second">Criar turma</button>        
+
+        <label class="label-input" for="serie_turma">
+            <i class="far fa-book icon-modify"></i>
+            <input type="text" name="serie_turma" placeholder="Série da Turma" required>
+        </label>
+
+        <div class="disciplinas">
+            <h4>Selecione as Disciplinas:</h4>
+            {% for disciplina in disciplinas %}
+                <label for="disciplina_{{ disciplina.id }}">
+                    <input type="checkbox" name="disciplinas_turma" value="{{ disciplina.id }}">
+                    {{ disciplina.nome }}
+                </label><br>
+            {% endfor %}
+        </div>
+
+        <button class="btn btn-second">Criar Turma</button>
     </form>
+
 {% endblock %}

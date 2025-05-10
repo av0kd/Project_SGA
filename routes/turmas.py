@@ -12,21 +12,35 @@ turmas_deletadas_bp = Blueprint('turmas_deletadas', __name__)
 @criar_turmas_bp.route('/criar_turmas')
 @login_required
 def criar_turmas():
-    return render_template('criar_turmas.html')
+    disciplinas = Disciplina.query.all()
+    return render_template('criar_turmas.html', disciplinas=disciplinas)
 
-@turmas_criadas_bp.route('/turmas_criadas', methods =['POST'])
+
+@turmas_criadas_bp.route('/turmas_criadas', methods=['POST'])
 @login_required
 def turmas_criadas():
     nome_turma = request.form.get('nome_turma')
+    serie_turma = request.form.get('serie_turma')  # Captura o valor da série da turma
+    disciplinas_selecionadas = request.form.getlist('disciplinas_turma')  # Captura as disciplinas selecionadas como lista
 
-    if not nome_turma:
+    if not nome_turma or not serie_turma or not disciplinas_selecionadas:
         return render_template('400.html')
 
-    nova_turma = Turma(nome=nome_turma)
+    # Cria a nova turma
+    nova_turma = Turma(nome=nome_turma, serie=serie_turma)
+
+    # Associa as disciplinas selecionadas à turma
+    for disciplina_id in disciplinas_selecionadas:
+        disciplina = Disciplina.query.get(disciplina_id)
+        if disciplina:
+            nova_turma.disciplinas.append(disciplina)
+
+    # Adiciona a turma ao banco de dados
     db.session.add(nova_turma)
     db.session.commit()
 
     return render_template('turmas_criadas.html', turma=nova_turma)
+
 
 @pesquisar_turmas_bp.route('/pesquisar_turmas')
 @login_required
