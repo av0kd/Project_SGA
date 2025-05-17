@@ -6,26 +6,35 @@
 
 {% block content %}
 
-    <h2>Turmas</h2>
-    
+    <h2>Resultado da Pesquisa de Turmas</h2>
+
     {% if turmas %}
-            {% for turma in turmas %}
-                <table>
+        {% for turma in turmas %}
+            <h3>{{ turma.serie }} {{ turma.nome }}</h3>
+            <table>
                 <thead>
-                    <th>{{ turma.nome }}</th>
+                    <tr>
+                        <th>Alunos</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    {% for nome_aluno in turma.alunos %}
-                        <tr><td>{{ nome_aluno.nome }}</td></tr>
+                    {% if turma.alunos %}
+                        {% for aluno in turma.alunos %}
+                            <tr>
+                                <td>{{ aluno.nome }}</td>
+                            </tr>
+                        {% endfor %}
                     {% else %}
-                        <td>Sem alunos cadastrados nesta turma.</td>
-                    {% endfor %}
+                        <tr>
+                            <td>Sem alunos cadastrados nesta turma.</td>
+                        </tr>
+                    {% endif %}
                 </tbody>
-                </table>
-            {% endfor %}
+            </table>
+            <br>
+        {% endfor %}
     {% else %}
-        <p>Não há turmas cadastradas.</p>
+        <p>Não há turmas encontradas com os critérios informados.</p>
     {% endif %}
-
 
 {% endblock %}

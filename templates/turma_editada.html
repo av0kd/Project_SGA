@@ -1,0 +1,27 @@
+{% extends "model.html" %}
+
+{% block title %}
+    <title>SGA - Turma Editada</title>
+{% endblock %}
+
+{% block content %}
+    <h2>Turma Editada com Sucesso!</h2>
+
+    <div class="info-box">
+        <p><strong>Nome da Turma:</strong> {{ turma.nome }}</p>
+        <p><strong>Série:</strong> {{ turma.serie }}</p>
+
+        <p><strong>Disciplinas Vinculadas:</strong></p>
+        <ul>
+            {% if turma.disciplinas %}
+                {% for disciplina in turma.disciplinas %}
+                    <li>{{ disciplina.nome }}</li>
+                {% endfor %}
+            {% else %}
+                <li>Nenhuma disciplina vinculada.</li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <a href="/editar_turmas" class="btn btn-primary">Editar Outra Turma</a>
+{% endblock %}

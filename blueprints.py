@@ -5,7 +5,8 @@ from routes import (
     turmas_pesquisadas_bp, deletar_turmas_bp, turmas_deletadas_bp,
     cadastrar_disciplinas_bp, disciplina_cadastrada_bp, consultar_disciplina_bp,
     disciplina_consultada_bp, vincular_disciplina_bp, disciplina_vinculada_bp,
-    inserir_notas_bp, gerar_relatorio_bp, register_user_bp, index_bp, logout_user_bp
+    inserir_notas_bp, gerar_relatorio_bp, register_user_bp, index_bp, logout_user_bp,
+    editar_turmas_bp, turma_editada_bp
 )
 
 def register_blueprints(app):
@@ -17,7 +18,8 @@ def register_blueprints(app):
 
     turmas = [
         criar_turmas_bp, turmas_criadas_bp, pesquisar_turmas_bp,
-        turmas_pesquisadas_bp, deletar_turmas_bp, turmas_deletadas_bp
+        turmas_pesquisadas_bp, deletar_turmas_bp, turmas_deletadas_bp,
+        editar_turmas_bp, turma_editada_bp
     ]
 
     disciplinas = [

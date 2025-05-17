@@ -32,23 +32,24 @@ class Aluno(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
     matricula = db.Column(db.String(20), unique=True, nullable=False)
-    turma_id = db.Column(db.Integer, db.ForeignKey('turma.id'), nullable=False)
+    turma_id = db.Column(db.Integer, db.ForeignKey('turma.id'), nullable=True)
     serie = db.Column(db.String(50), nullable=True)
 
     notas = db.relationship('Nota', backref='aluno', lazy=True)
     disciplinas = db.relationship('Disciplina', secondary='aluno_disciplina', back_populates='alunos')
 
-    def __init__(self, nome, matricula, turma_id):
+    def __init__(self, nome, matricula, turma_id=None):
         self.nome = nome
         self.matricula = matricula
         self.turma_id = turma_id
+        self.serie = None
 
-        turma = Turma.query.get(turma_id)
-        if turma:
-            self.serie = turma.serie
-            
-            for disciplina in turma.disciplinas:
-                self.disciplinas.append(disciplina)
+        if turma_id:
+            turma = Turma.query.get(turma_id)
+            if turma:
+                self.serie = turma.serie
+                for disciplina in turma.disciplinas:
+                    self.disciplinas.append(disciplina)
 
     def __repr__(self):
         return f'<Aluno {self.nome} - {self.serie}>'

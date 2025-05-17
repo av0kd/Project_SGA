@@ -16,11 +16,11 @@
         </tr>
     </thead>
     <tbody>
-    {% for nome_aluno, matricula_aluno, nome_turma in alunos %}
+    {% for nome_aluno, matricula_aluno, nome_turma, serie_turma in alunos %}
         <tr>
             <td>{{ nome_aluno }}</td>
             <td>{{ matricula_aluno }}</td>
-            <td>{{ nome_turma }}</td>
+            <td>{{ serie_turma }} {{ nome_turma }}</td>
         </tr>
     {% endfor %}
     </tbody>

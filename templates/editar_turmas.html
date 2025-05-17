@@ -1,0 +1,47 @@
+{% extends "model.html" %}
+
+{% block title %}
+    <title>SGA - Editar Turma</title>
+{% endblock %}
+
+{% block content %}
+
+<form method="GET" action="/editar_turmas">
+    <label>Escolha a turma para editar:</label>
+    <select name="turma_id" required>
+        {% for turma in turmas %}
+            <option value="{{ turma.id }}"
+                {% if turma_selecionada and turma.id == turma_selecionada.id %}selected{% endif %}>
+                {{ turma.nome }} | {{ turma.serie }}
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Carregar</button>
+</form>
+
+{% if turma_selecionada %}
+<form method="POST" action="/turma_editada">
+    <input type="hidden" name="turma_id" value="{{ turma_selecionada.id }}">
+
+    <label>Novo nome:</label>
+    <input type="text" name="nome" value="{{ turma_selecionada.nome }}">
+
+    <label>Nova série:</label>
+    <input type="text" name="serie" value="{{ turma_selecionada.serie }}">
+
+    <label>Disciplinas:</label><br>
+    {% for disciplina in disciplinas %}
+        <input
+            type="checkbox"
+            name="disciplinas"
+            value="{{ disciplina.id }}"
+            {% if disciplina in turma_selecionada.disciplinas %}checked{% endif %}
+        >
+        {{ disciplina.nome }}<br>
+    {% endfor %}
+
+    <button type="submit">Salvar Alterações</button>
+</form>
+{% endif %}
+
+{% endblock %}

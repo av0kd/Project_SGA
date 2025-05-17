@@ -14,7 +14,9 @@ aluno_deletado_bp = Blueprint('aluno_deletado', __name__)
 @adicionar_alunos_bp.route('/adicionar_alunos')
 @login_required
 def adicionar_alunos():
-    return render_template('adicionar_alunos.html')
+    turmas = Turma.query.all()
+    return render_template('adicionar_alunos.html', turmas=turmas)
+
 
 @alunos_adicionados_bp.route('/alunos_adicionados', methods=['POST'])
 @login_required
@@ -34,13 +36,13 @@ def alunos_adicionados():
 def pesquisar_alunos():
     return render_template('pesquisar_alunos.html')
 
-#''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 @aluno_pesquisado_bp.route('/aluno_pesquisado', methods=['POST'])
 @login_required
 def aluno_pesquisado():
     aluno_nome = request.form.get('nome_aluno', '').strip()
     
-    query = db.session.query(Aluno.nome, Aluno.matricula, Turma.nome) \
+    query = db.session.query(Aluno.nome, Aluno.matricula, Turma.nome, Turma.serie) \
              .outerjoin(Turma, Aluno.turma_id == Turma.id)
     
     if aluno_nome:
@@ -57,9 +59,10 @@ def aluno_pesquisado():
 @editar_alunos_bp.route('/editar_aluno')
 @login_required
 def editar_aluno():
-    return render_template('editar_aluno.html')
+    turmas = Turma.query.all()
+    return render_template('editar_aluno.html', turmas=turmas)
 
-@aluno_editado_bp.route('/aluno_editado', methods = ["POST"])
+@aluno_editado_bp.route('/aluno_editado', methods=["POST"])
 @login_required
 def aluno_editado():
     matricula = request.form.get('matricula')
@@ -78,7 +81,17 @@ def aluno_editado():
         aluno.nome = novo_nome
 
     if nova_turma_id:
-        aluno.turma_id = nova_turma_id
+        nova_turma = Turma.query.get(nova_turma_id)
+        if nova_turma:
+            aluno.turma_id = nova_turma.id
+            aluno.serie = nova_turma.serie
+
+            # Limpa disciplinas antigas
+            aluno.disciplinas.clear()
+
+            # Adiciona as disciplinas da nova turma
+            for disciplina in nova_turma.disciplinas:
+                aluno.disciplinas.append(disciplina)
 
     db.session.commit()
     

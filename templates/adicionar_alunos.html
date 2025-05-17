@@ -19,10 +19,16 @@
             <input type="text" placeholder="Matrícula" name="matricula" required>
         </label>
 
-        <label class="label-input">
+       <label class="label-input">
             <i class="fas fa-users icon-modify"></i>
-            <input type="text" placeholder="ID da Turma" name="turma_id">
-        </label>
+            <select name="turma_id">
+                <option value="">Selecione a turma</option>
+                {% for turma in turmas %}
+                    <option value="{{ turma.id }}">{{ turma.serie }} {{ turma.nome }}</option>
+                {% endfor %}
+            </select>
+    </label>
+
 
         <button class="btn btn-second" type="submit">Registrar</button>        
     </form>

@@ -4,14 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGA - Login</title>
-    <link rel="stylesheet" href="../static/css/login.css">
+    <link rel="stylesheet" href="/static/css/login.css">
 </head>
 <body class="login">
-    <div
-    <form action="" method="POST">
-        Nome: <input type="text" name="matricula_user" id="">
-        SENHA: <input type="password" name="senha_user" id="">
-        <input type="submit" value="Logar">
-    </form>
+    
+    <div class="div_head">
+        <img src="/static/img/sga_logo_img.png" alt="Logo do Sistema de Gestão Acadêmica">
+        <h1>Boas vindas!</h1>
+    </div>
+
+    <div class="div_form">
+        <form method="POST" autocomplete="on">
+            
+            <label for="matricula_user">Usuário:</label>
+            <input type="text" name="matricula_user" id="matricula_user" placeholder="Digite sua matrícula" required>
+
+            <label for="senha_user">Senha:</label>
+            <input type="password" name="senha_user" id="senha_user" placeholder="Digite sua senha" required>
+
+            <input type="submit" value="ACESSAR">
+        </form>
+    </div> 
+
 </body>
 </html>

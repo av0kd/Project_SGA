@@ -6,13 +6,18 @@
 
 {% block content %}
     <h2>Deletar Turma</h2>
-    <p class="description description-second">ID da turma para excluir:</p>
+    <p class="description description-second">Selecione a turma para excluir:</p>
+    
     <form class="form" method="POST" action="/turma_deletada">
         <label class="label-input" for="turma_id">
             <i class="far fa-user icon-modify"></i>
-            <input type="text" placeholder="Ex: Turma B" name="turma_id" required>
+            <select name="turma_id" required>
+                <option value="" disabled selected>Selecione uma turma</option>
+                {% for turma in turmas %}
+                    <option value="{{ turma.id }}">{{ turma.serie }} | {{ turma.nome }}</option>
+                {% endfor %}
+            </select>
         </label>
         <button class="btn btn-second" type="submit">Deletar</button>
     </form>
-
 {% endblock %}
