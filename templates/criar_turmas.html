@@ -8,27 +8,36 @@
 
     <h2>Criar Nova Turma</h2>
     <p class="description description-second">Insira as informações para criar a turma:</p>
-    
-        <form class="form" method="POST" action="{{ url_for('turmas_criadas.turmas_criadas') }}">
-        <label class="label-input" for="nome_turma">
-            <i class="far fa-user icon-modify"></i>
-            <input type="text" name="nome_turma" placeholder="Nome da Turma" required>
-        </label>
 
-        <label class="label-input" for="serie_turma">
-            <i class="far fa-book icon-modify"></i>
-            <input type="text" name="serie_turma" placeholder="Série da Turma" required>
-        </label>
+    <form class="form" method="POST" action="{{ url_for('turmas_criadas.turmas_criadas') }}">
+    <label class="label-input" for="nome_turma">
+        <i class="far fa-user icon-modify"></i>
+        <input type="text" name="nome_turma" placeholder="Nome da Turma" required>
+    </label>
 
-        <div class="disciplinas">
-            <h4>Selecione as Disciplinas:</h4>
-            {% for disciplina in disciplinas %}
-                <label for="disciplina_{{ disciplina.id }}">
-                    <input type="checkbox" name="disciplinas_turma" value="{{ disciplina.id }}">
-                    {{ disciplina.nome }}
-                </label><br>
-            {% endfor %}
-        </div>
+    <label class="label-input" for="serie_turma">
+        <i class="far fa-book icon-modify"></i>
+        <input type="text" name="serie_turma" placeholder="Série da Turma" required>
+    </label>
+
+
+    <p class="description description-second">Selecione as Disciplinas:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Check</th>
+            </tr>
+        </thead>
+        </tbody>
+        {% for disciplina in disciplinas %}
+            <tr>
+                <td>{{ disciplina.nome }}</td>
+                <td><input type="checkbox" name="disciplinas_turma" value="{{ disciplina.id }}"></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
         <button class="btn btn-second">Criar Turma</button>
     </form>

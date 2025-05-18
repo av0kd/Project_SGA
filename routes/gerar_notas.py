@@ -1,6 +1,9 @@
-from flask import Blueprint, render_template, request, send_file
+from flask import Blueprint, render_template, request, send_file, make_response
 from flask_login import login_required
-from models import db, Turma, Aluno, Disciplina, Nota, AlunoDisciplina
+from models import db, Turma, Aluno, Disciplina, Nota
+from weasyprint import HTML
+from datetime import datetime
+from io import BytesIO
 
 gerar_relatorio_bp = Blueprint('gerar_relatorio', __name__)
 
@@ -10,37 +13,39 @@ def gerar_relatorio():
     if request.method == 'POST':
         matricula_aluno = request.form.get('matricula_aluno')
 
-        # Buscando o aluno pela matrícula
-        resultado = db.session.query(
-            Aluno.nome, Turma.nome, Disciplina.nome, Nota.valor
-        ).join(Turma, Aluno.turma_id == Turma.id) \
-         .join(Nota, Nota.aluno_id == Aluno.id) \
-         .join(Disciplina, Nota.disciplina_id == Disciplina.id) \
-         .filter(Aluno.matricula == matricula_aluno).all()
+        aluno = db.session.query(Aluno).filter_by(matricula=matricula_aluno).first()
 
-        if not resultado:
-            return "Aluno não encontrado ou sem notas cadastradas."
+        if not aluno:
+            mensagem = "Matricula não encontrada"
+            return render_template('400.html', mensagem = mensagem)
 
-        nome_aluno = resultado[0][0]
-        nome_turma = resultado[0][1]
-        notas_disciplinas = [(disciplina, nota) for _, _, disciplina, nota in resultado]
+        disciplinas = aluno.turma.disciplinas if aluno.turma else []
 
-        notas = [nota for _, nota in notas_disciplinas]
-        media = sum(notas) / len(notas)
+        notas = {
+            nota.disciplina_id: nota.valor
+            for nota in db.session.query(Nota).filter_by(aluno_id=aluno.id).all()
+        }
 
-        nome_arquivo = f"relatorio_notas_{nome_aluno}.txt"
+        valores = [valor for valor in notas.values() if valor is not None]
+        media = sum(valores) / len(valores) if valores else None
 
-        with open(nome_arquivo, 'w') as arquivo:
-            arquivo.write("SGA BOLETIM\n")
-            arquivo.write(f"\nNome do Aluno: {nome_aluno}\n")
-            arquivo.write(f"Turma: {nome_turma}\n\n")
-            arquivo.write("Disciplina\tNota\n")
-            for disciplina, nota in notas_disciplinas:
-                arquivo.write(f"{disciplina}\t{nota}\n")
-                
-            arquivo.write(f"\nMédia Final: {media:.2f}\n")
+        timestamp = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
 
-        return send_file(nome_arquivo, as_attachment=True)
+        html = render_template(
+            "boletim_aluno.html",
+            aluno=aluno,
+            disciplinas=disciplinas,
+            notas=notas,
+            media=media,
+            timestamp=timestamp
+        )
 
-    # Para o caso de o método ser GET ou se o usuário acessar diretamente a página
+        pdf = HTML(string=html, base_url=request.root_url).write_pdf()
+
+        response = make_response(pdf)
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Disposition'] = f'attachment; filename=boletim_{aluno.nome}.pdf'
+
+        return response
+
     return render_template('gerar_relatorio.html')

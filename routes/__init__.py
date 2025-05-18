@@ -8,7 +8,7 @@ from .turmas import criar_turmas_bp, turmas_criadas_bp, pesquisar_turmas_bp, tur
 from .turmas import deletar_turmas_bp, turmas_deletadas_bp, editar_turmas_bp, turma_editada_bp
 
 from .disciplina import cadastrar_disciplinas_bp, disciplina_cadastrada_bp, consultar_disciplina_bp
-from .disciplina import disciplina_consultada_bp
+from .disciplina import disciplina_consultada_bp, deletar_disciplina_bp, disciplina_deletada_bp
 
 from .vincular import vincular_disciplina_bp, disciplina_vinculada_bp
 

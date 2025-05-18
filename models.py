@@ -35,7 +35,7 @@ class Aluno(db.Model):
     turma_id = db.Column(db.Integer, db.ForeignKey('turma.id'), nullable=True)
     serie = db.Column(db.String(50), nullable=True)
 
-    notas = db.relationship('Nota', backref='aluno', lazy=True)
+    notas = db.relationship('Nota', backref='aluno', lazy='joined')
     disciplinas = db.relationship('Disciplina', secondary='aluno_disciplina', back_populates='alunos')
 
     def __init__(self, nome, matricula, turma_id=None):
@@ -58,7 +58,7 @@ class Disciplina(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), unique=True, nullable=False)
 
-    notas = db.relationship('Nota', backref='disciplina', lazy=True)
+    notas = db.relationship('Nota', backref='disciplina', lazy=True, cascade='all, delete')
     alunos = db.relationship('Aluno', secondary='aluno_disciplina', back_populates='disciplinas')
 
     def __repr__(self):

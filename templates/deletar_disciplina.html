@@ -1,0 +1,17 @@
+{% extends "model.html" %}
+
+{% block title %}
+    <title>Deletar Disciplina</title>
+{% endblock %}
+
+{% block content %}
+    <div class="form-box">
+        <h2>Deletar Disciplina</h2>
+        <form action="/confirmar_exclusao_disciplina" method="POST">
+            <label for="nome_disciplina">Nome da disciplina:</label><br>
+            <input  type="text" id="nome_disciplina" name="nome_disciplina" required>
+
+            <input class="btn btn-second" type="submit" value="Deletar">
+        </form>
+    </div>
+{% endblock %}

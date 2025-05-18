@@ -44,14 +44,15 @@ def aluno_pesquisado():
     
     query = db.session.query(Aluno.nome, Aluno.matricula, Turma.nome, Turma.serie) \
              .outerjoin(Turma, Aluno.turma_id == Turma.id)
-    
+     
     if aluno_nome:
         alunos = query.filter(Aluno.nome.ilike(f"%{aluno_nome}%")).all()
     else:
         alunos = query.all()
     
     if not alunos:
-        return render_template('400.html', mensagem="Nenhum aluno encontrado.")
+        mensagem = "Nenhum aluno encontrado"
+        return render_template('400.html', mensagem = mensagem)
     
     return render_template('aluno_pesquisado.html', alunos=alunos)
 #--------------------------------------------------------------
@@ -75,7 +76,8 @@ def aluno_editado():
     aluno = Aluno.query.filter_by(matricula=matricula).first()
 
     if not aluno:
-        return f"Aluno com matrícula '{matricula}' não encontrado.", 404
+        mensagem = f"Aluno com matrícula '{matricula}' não encontrado."
+        return render_template('400.html', mensagem = mensagem)
 
     if novo_nome:
         aluno.nome = novo_nome
@@ -86,10 +88,8 @@ def aluno_editado():
             aluno.turma_id = nova_turma.id
             aluno.serie = nova_turma.serie
 
-            # Limpa disciplinas antigas
             aluno.disciplinas.clear()
 
-            # Adiciona as disciplinas da nova turma
             for disciplina in nova_turma.disciplinas:
                 aluno.disciplinas.append(disciplina)
 
@@ -108,7 +108,8 @@ def aluno_deletado():
     matricula_aluno = request.form.get('matricula_aluno')
 
     if not matricula_aluno:
-        return "Erro: matrícula do aluno é obrigatória.", 400
+        mensagem = "Matricula é obrigatório"
+        return render_template('400.html', mensagem = mensagem)
 
     aluno = Aluno.query.filter_by(matricula=matricula_aluno).first()
 

@@ -1,0 +1,12 @@
+SGA BOLETIM
+
+Nome do Aluno: Davi Meliante
+Turma: c
+
+Disciplina	Nota
+Matemática	2.0
+Física	0.0
+Biologia	1.0
+Química	0.0
+
+Média Final: 0.75

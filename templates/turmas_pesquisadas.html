@@ -10,11 +10,10 @@
 
     {% if turmas %}
         {% for turma in turmas %}
-            <h3>{{ turma.serie }} {{ turma.nome }}</h3>
             <table>
                 <thead>
                     <tr>
-                        <th>Alunos</th>
+                        <th>Alunos(as) da {{ turma.serie }} {{ turma.nome }}</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -6,7 +6,7 @@
     {% block title %} 
     <title>SGA -</title>
     {% endblock %}
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="../static/css/index.css">
     <script src="/static/script/script.js"></script>
@@ -45,28 +45,11 @@
                     <button onclick="myFunction(this)" class="dropbtn">DISCIPLINAS</button>
                     <div id="myDropdown" class="dropdown-content">
                     <a href="/cadastrar_disciplinas">Cadastrar disciplinas</a>
-                    <a href="/vincular_disciplina">Vincular Disciplina</a>
-                    <!--<a href="/deletar_disciplina">Deletar Disciplina</a>-->
+                    <!--<a href="/vincular_disciplina">Vincular Disciplina</a>-->
+                    <a href="/deletar_disciplina">Deletar Disciplina</a>
                     <a href="/consultar_disciplina">Pesquisar disciplina</a>
                     </div>
                 </div> 
-<!------------------------------------------
-
-                <div class="dropdown">
-                    <button onclick="myFunction(this)" class="dropbtn">PROFESSORES</button>
-                    <div id="myDropdown" class="dropdown-content">
-                    <a href="/editar_disciplina">Editar Disciplina</a>
-                    <a href="/deletar_disciplina">Deletar Disciplina</a>
-                    </div>
-                </div> 
-                <div class="dropdown">
-                    <button onclick="myFunction(this)" class="dropbtn">DIGITAÇÃO</button>
-                    <div id="myDropdown" class="dropdown-content">
-                    <a href="/editar_disciplina">Editar Disciplina</a>
-                    <a href="/deletar_disciplina">Deletar Disciplina</a>
-                    </div>
-                </div> 
-            ------------------>
                 
                 <a href="/gerar_relatorio">RELATÓRIOS</a>
             </nav>

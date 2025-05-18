@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Boletim - {{ aluno.nome }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            font-size: 14px;
+            color: #333;
+        }
+        header {
+            border-bottom: 2px solid #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .info-area {
+            flex: 1;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        header .info {
+            margin-top: 5px;
+            font-size: 16px;
+        }
+        .logo {
+            height: 80px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #00000000;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #3e8d74;
+            color: white;
+        }
+        tfoot td {
+            font-weight: bold;
+            background-color: #3e8d74;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 12px;
+            text-align: right;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="info-area">
+            <h1>Boletim Escolar</h1>
+            <div class="info">
+                <strong>Nome:</strong> {{ aluno.nome }}<br>
+                <strong>Matrícula:</strong> {{ aluno.matricula }}<br>
+                <strong>Turma:</strong> {{ aluno.turma.serie if aluno.turma else 'N/A' }} {{ aluno.turma.nome if aluno.turma else '' }}
+            </div>
+        </div>
+        <img src="/static/img/sga_logo_img.png" class="logo" alt="Logo SGA">
+    </header>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Disciplina</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for disciplina in disciplinas %}
+            <tr>
+                <td>{{ disciplina.nome }}</td>
+                <td>
+                    {% if notas.get(disciplina.id) is not none %}
+                        {{ '%.1f'|format(notas[disciplina.id]) }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Nota Final</td>
+                <td>
+                    {% if media is not none %}
+                        {{ '%.1f'|format(media) }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <footer>
+        Emitido em: {{ timestamp }}
+    </footer>
+</body>
+</html>

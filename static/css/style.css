@@ -84,6 +84,8 @@ body {
     background-color: #4CA78A;
     border: 1px solid #58af9b;
     transition: background-color .5s;
+    display: block;
+    margin: 10px auto;
 }
 .btn-second:hover {
     background-color: #fff;

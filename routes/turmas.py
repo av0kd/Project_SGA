@@ -26,7 +26,8 @@ def turmas_criadas():
     disciplinas_selecionadas = request.form.getlist('disciplinas_turma')
 
     if not nome_turma or not serie_turma or not disciplinas_selecionadas:
-        return render_template('400.html')
+        mensagem = "Turma ou Série em branco"
+        return render_template('400.html', mensagem = mensagem)
 
     turma_existente = Turma.query.filter_by(nome=nome_turma, serie=serie_turma).first()
     if turma_existente:

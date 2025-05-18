@@ -12,7 +12,7 @@
         {% for turma in turmas %}
             <option value="{{ turma.id }}"
                 {% if turma_selecionada and turma.id == turma_selecionada.id %}selected{% endif %}>
-                {{ turma.nome }} | {{ turma.serie }}
+                {{ turma.serie }} {{ turma.nome }}
             </option>
         {% endfor %}
     </select>
@@ -23,11 +23,11 @@
 <form method="POST" action="/turma_editada">
     <input type="hidden" name="turma_id" value="{{ turma_selecionada.id }}">
 
-    <label>Novo nome:</label>
-    <input type="text" name="nome" value="{{ turma_selecionada.nome }}">
-
     <label>Nova série:</label>
-    <input type="text" name="serie" value="{{ turma_selecionada.serie }}">
+    <input type="text" name="serie" value="{{ turma_selecionada.serie }}"><br>
+
+    <label>Novo nome:</label>
+    <input type="text" name="nome" value="{{ turma_selecionada.nome }}"><br>
 
     <label>Disciplinas:</label><br>
     {% for disciplina in disciplinas %}

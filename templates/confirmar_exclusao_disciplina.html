@@ -1,0 +1,22 @@
+{% extends "model.html" %}
+
+{% block title %}
+    <title>Confirmação de Exclusão</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Deseja realmente excluir a disciplina?</h2>
+        <p><strong>{{ disciplina.nome }}</strong></p>
+        <p>Essa ação irá remover também todas as notas associadas a esta disciplina.</p>
+
+        <form action="/disciplina_deletada" method="POST">
+            <input type="hidden" name="nome_disciplina" value="{{ disciplina.nome }}">
+            <button type="submit" style="background-color: red; color: white; padding: 10px;">sim sinhô!</button>
+        </form>
+
+        <br>
+
+        <a href="/deletar_disciplina">Cancelar</a>
+    </div>
+{% endblock %}

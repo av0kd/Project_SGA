@@ -15,15 +15,19 @@
             <th>Turma</th>
         </tr>
     </thead>
-    <tbody>
-    {% for nome_aluno, matricula_aluno, nome_turma, serie_turma in alunos %}
-        <tr>
-            <td>{{ nome_aluno }}</td>
-            <td>{{ matricula_aluno }}</td>
-            <td>{{ serie_turma }} {{ nome_turma }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
+        {% for nome_aluno, matricula_aluno, nome_turma, serie_turma in alunos %}
+            <tr>
+                <td>{{ nome_aluno }}</td>
+                <td>{{ matricula_aluno }}</td>
+                <td>
+                    {% if nome_turma is none and serie_turma is none %}
+                        Sem turma
+                    {% else %}
+                        {{ serie_turma }} {{ nome_turma }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
     </table>
 
 {% endblock %}

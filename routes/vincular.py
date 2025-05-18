@@ -16,20 +16,18 @@ def disciplina_vinculada():
     matricula_aluno = request.form.get('matricula_aluno')
     disciplina_id = request.form.get('disciplina_id')
 
-    # Buscar o aluno pela matricula e disciplina pelo ID
     aluno = Aluno.query.filter_by(matricula=matricula_aluno).first()
     disciplina = Disciplina.query.get(disciplina_id)
 
     if not aluno:
-        return render_template("/400.html")
+        return render_template("400.html")
     if not disciplina:
-        return render_template("/400.html")
+        return render_template("400.html")
 
-    # Verifica se o aluno já está vinculado à disciplina
     if AlunoDisciplina.query.filter_by(aluno_id=aluno.id, disciplina_id=disciplina.id).first():
-        return "O aluno já está vinculado a essa disciplina!", 400
+        mensagem = "O aluno já está vinculado a essa disciplina!"
+        return render_template('400.html', mensagem = mensagem)
 
-    # Criar o vínculo entre aluno e disciplina
     novo_vinculo = AlunoDisciplina(aluno_id=aluno.id, disciplina_id=disciplina.id)
     db.session.add(novo_vinculo)
     db.session.commit()

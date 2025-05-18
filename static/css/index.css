@@ -150,6 +150,6 @@ body, html {
   }
   
   .dropdown-content.show {
-    max-height: 500px; /* valor alto para comportar todos os itens */
+    max-height: 500px;
   }
   
