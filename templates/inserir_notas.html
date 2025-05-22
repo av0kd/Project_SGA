@@ -45,7 +45,7 @@
                                 <input type="number" 
                                        name="nota_{{ aluno.id }}_{{ disciplina.id }}" 
                                        value="{{ notas_dict[(aluno.id, disciplina.id)] if (aluno.id, disciplina.id) in notas_dict else '' }}" 
-                                       step="0.1" min="0" max="10" required
+                                       step="0.1" min="0" max="10"
                                        style="width: 70px; text-align: center;">
                             </td>
                         {% endfor %}
