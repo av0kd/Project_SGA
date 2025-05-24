@@ -25,6 +25,12 @@ def alunos_adicionados():
     matricula = request.form.get('matricula')
     turma_id = request.form.get('turma_id')
 
+    aluno_existente = Aluno.query.filter_by(matricula=matricula).first()
+
+    if aluno_existente:
+        mensagem = "Matricula já cadastrada"
+        return render_template("400.html", mensagem = mensagem)
+
     novo_aluno = Aluno(nome=nome, matricula=matricula, turma_id=turma_id)
     db.session.add(novo_aluno)
     db.session.commit()
