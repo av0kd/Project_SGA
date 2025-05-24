@@ -35,7 +35,6 @@ class Aluno(db.Model):
     turma_id = db.Column(db.Integer, db.ForeignKey('turma.id'), nullable=True)
     serie = db.Column(db.String(50), nullable=True)
 
-    notas = db.relationship('Nota', backref='aluno', lazy='joined')
     disciplinas = db.relationship('Disciplina', secondary='aluno_disciplina', back_populates='alunos')
 
     def __init__(self, nome, matricula, turma_id=None):
